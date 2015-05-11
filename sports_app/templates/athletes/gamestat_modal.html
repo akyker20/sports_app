@@ -26,7 +26,7 @@
 
 <div id="gamestat-submodal-clips">
 	<div id="gamestat-clip-container">
-    {% for clip in stat.game.gamefilm.clips.all %}
+    {% for clip in stat.clips.all %}
         <img class="gamestat-video weak" height="50" width="50" src="{{STATIC_URL}}images/player.jpg" data-clip-id="{{clip.id}}">
     {% endfor %}
 	</div>

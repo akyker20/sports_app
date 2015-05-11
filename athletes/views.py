@@ -145,13 +145,13 @@ def get_gamestat(request):
 		gamestat = GameStat.objects.get(pk=int(request.GET['stat_id']))
 		json = {}
 		clip = None
-		if gamestat.game.gamefilm.clips.exists():
-			clip = gamestat.game.gamefilm.clips.first()
+		if gamestat.clips.exists():
+			clip = gamestat.clips.first()
 
 		json['html'] = render_to_string('athletes/gamestat_modal.html', 
 										RequestContext(request, { "stat":gamestat, "clip":clip }))
 		if clip:
-			json['dash_info'] = { "mpd_url":clip.gamefilm.mpd_url, 
+			json['dash_info'] = { "mpd_url":clip.get_gamefilm().mpd_url, 
 								  "start_time":clip.gamefilm_start_time, 
 								  "end_time":clip.gamefilm_end_time}
 
@@ -173,7 +173,7 @@ def play_clip(request):
 			RequestContext(request, { "clip":clip }))
 		
 		if(clip.__class__.__name__ == "GameFilmClip"):
-			json['dash_info'] = { "mpd_url":clip.gamefilm.mpd_url, 
+			json['dash_info'] = { "mpd_url":clip.game.gamefilm.mpd_url, 
 								  "start_time":clip.gamefilm_start_time, 
 								  "end_time":clip.gamefilm_end_time}
 	
@@ -249,9 +249,9 @@ def fetch_dash_game_highlights(game):
 	json = {}
 	json['mpd_url'] = gamefilm.mpd_url
 	time_ranges = []
-	clips_ordered_by_view_count = gamefilm.clips.order_by('-view_count')[0:10]
+	clips_ordered_by_view_count = game.clips.order_by('-view_count')[0:10]
 	min_view_count = clips_ordered_by_view_count[len(clips_ordered_by_view_count)-1].view_count
-	most_popular_clips = gamefilm.clips.filter(view_count__gte=min_view_count)
+	most_popular_clips = game.clips.filter(view_count__gte=min_view_count)
 	for clip in most_popular_clips.order_by('gamefilm_start_time')[0:10]:
 		time_ranges.append({"start_time": clip.gamefilm_start_time, "end_time": clip.gamefilm_end_time })
 	json['highlights_time_ranges'] = time_ranges

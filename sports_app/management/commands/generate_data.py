@@ -84,6 +84,7 @@ class Command(BaseCommand):
 				GameFilmClip.objects.create(athlete=athlete,
 											view_count=randint(0, 200),
 											gamestat=gamestat,
+											game=game,
 											gamefilm_start_time=time,
 											gamefilm_end_time=time+interval)
 				time += interval

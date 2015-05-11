@@ -145,6 +145,7 @@ class UploadedClip(Clip):
 
 class GameFilmClip(Clip):
 	gamestat = models.ForeignKey(GameStat, related_name='clips')
+	game = models.ForeignKey(Game, related_name='clips')
 	gamefilm_start_time = models.DecimalField(max_digits=6, decimal_places=1, default=0.0)
 	gamefilm_end_time = models.DecimalField(max_digits=6, decimal_places=1, default=0.0)
 

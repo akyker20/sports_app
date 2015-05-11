@@ -228,6 +228,39 @@ img.gamestat-video {
 
 
 
+/* Gamestat Profile Block */
+
+section.game-stats h4 {
+    margin-top: 0px;
+}
+
+div.gamestat-heading {
+    font-size: 16px; 
+}
+
+ul.video-blocks {
+    margin: 0px;
+}
+
+div.videos-holder {
+    background: rgb(0, 71, 86);
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+div.gamestat-block {
+    border: 5px solid white;
+    padding: 15px;
+    background: rgba(255, 255, 255, 0.13);
+    margin-bottom: 30px;
+    cursor: pointer;
+    width: 500px;
+}
+
+
+/* End Gamestat Block */
+
+
 span.glyphicon.add-clip,
 span.glyphicon.glyphicon-ok {
     color: rgb(62, 181, 62);
@@ -350,35 +383,6 @@ section:first-child {
     margin-top: 20px;
 }
 
-ul.video-blocks {
-    margin: 0px;
-}
-
-section.game-stats h4 {
-    margin-top: 0px;
-}
-
-div.gamestat-content {
-    margin: 20px 0px;
-}
-
-div.gamestat-heading {
-    font-size: 20px; 
-}
-
-div.videos-holder {
-    background: rgb(0, 71, 86);
-    margin-top: 20px;
-    margin-bottom: 20px;
-}
-
-div.gamestat-block {
-    border: 5px solid white;
-    padding: 15px;
-    background: rgba(255, 255, 255, 0.13);
-    margin-bottom: 30px;
-    cursor: pointer;
-}
 
 span.glyphicon-ok.watching {
     margin-left: 10px;

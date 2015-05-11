@@ -1,0 +1,30 @@
+<nav class="options-menu">
+  <ul id="options-list">
+    {% if user.athleteprofile %}
+
+      <li id="notifications">Notifications<span class="badge">{{user.athleteprofile.notifications.count}}</span></li>
+      <ul id="notification-list" style="display: none">
+        {% for notification in user.athleteprofile.notifications.all %}
+          <li data-gamefilm-id="{{notification.game_film.id}}">{{notification.game_film}}</li>
+        {% endfor %}
+      </ul>
+
+      <li><a href="{% url 'feed' %}">Feed</a></li>
+      <li><a href="{% url 'athlete_profile' %}">Profile</a></li>
+      <li><a href="{% url 'top10' %}">Top 10</a></li>
+      <li>Rankings</li>
+      <li>Games</li>
+      
+    {% endif %}
+
+    {% if user.is_authenticated %}  
+      <li>
+        <form name="form" method="post" action="{% url 'logout' %}">
+          {% csrf_token %}
+          <a onclick="form.submit();">Logout</a>
+        </form>
+      </li>
+    {% endif %}
+
+  </ul>
+</nav>

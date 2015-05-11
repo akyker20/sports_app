@@ -1,0 +1,15 @@
+{% extends 'athletes/cc/base_cc.html' %}
+
+
+{% block clip_options %}
+
+{% load athlete_actions %}
+
+	 <div class="left">
+        Highlights
+        <h5 class="weak no-margin">{{ game.date }}</h5>
+      </div>
+
+	<button class="right btn btn-success">Share</button>
+
+{% endblock %}

@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+
+{% block content %}
+	{% load universal %}
+	<section class="feed">
+    <div class="content">
+      <h1 class="header">Feed</h1>
+		{% for object in feed_objects %}
+			{% if object|get_class == 'GameStat' %}
+				{% include 'athletes/gamestat.html' with stat=object athlete=athlete %}
+			{% else %}
+				<div class="feed-clip">
+					{% include 'athletes/cc/regular_cc.html' with clip=object %}
+				</div>
+			{% endif %}
+		{% endfor %}
+    </div>
+	</section>
+
+{% endblock %}

@@ -1,0 +1,99 @@
+/* =============================================================================
+   NORMALIZATION
+========================================================================== */
+
+
+/* Mod text */
+
+
+
+/* tags */
+
+.m_tags {
+    margin-bottom: 30px;
+}
+
+.m_tags li {
+    padding-bottom:4px;
+}
+
+.m_tags li,
+.m_tags a {
+    display: inline-block;
+}
+
+.m_tags li {
+    margin-right: 4px;
+}
+
+.m_tags a {
+    color: #666666;
+    font-size: 1.6em;
+    background: #FFF;
+    padding: .3em .6em;
+    text-decoration: none;
+}
+
+.m_tags a:hover {
+    color: #FFF;
+    background-color: #004756;
+}
+
+
+
+
+/* Gridster styles */
+
+.gridster .gs-w {
+    background: #FFF;
+    cursor: pointer;
+    -webkit-box-shadow: 0 0 5px rgba(0,0,0,0.3);
+    box-shadow: 0 0 5px rgba(0,0,0,0.3);
+}
+
+.gridster .player {
+    -webkit-box-shadow: 3px 3px 5px rgba(0,0,0,0.3);
+    box-shadow: 3px 3px 5px rgba(0,0,0,0.3);
+}
+
+.gridster .preview-holder {
+    border: none!important;
+    border-radius: 0!important;
+    background: rgba(255,255,255,.2)!important;
+}
+
+div#file-uploader {
+	width: 300px;
+	margin: 50px auto;
+	padding: 20px;
+	border: 2px solid gray;
+}
+
+/* Search css */
+
+ul.search-results {
+    position: absolute;
+    width: 200px;
+    top: 60px;
+}
+
+ul.search-results li {
+    overflow: auto;
+    background-color: white;
+    padding: 6px;
+}
+
+ul.search-results li img {
+    float: left;
+}
+
+ul.search-results li h5 {
+    margin: 10px;
+    float: left;
+    margin-left: 15px;
+}
+
+ul.search-results li:hover {
+    background-color: steelblue;
+    color: white;
+}

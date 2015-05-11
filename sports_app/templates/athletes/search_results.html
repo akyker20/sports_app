@@ -1,0 +1,14 @@
+<ul class="search-results">
+	{% for athlete in athlete_results %}
+	<a href="{% url 'athlete_profile_with_id' athlete_id=athlete.id %}">
+		<li>
+			<img src="{{STATIC_URL}}images/player.jpg" height="40" width="40">
+			<h5>{{ athlete }}
+				{% if athlete.athlete == user %}
+				(me)
+				{% endif %}
+			</h5>
+		</li>
+	</a>
+	{% endfor %}
+</ul>

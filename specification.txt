@@ -1,0 +1,7 @@
+The following document is a specification for the project:
+
+The goal of this project is to build a social network for high school athletes that allow
+them to post sports related content and interact with the content posted by others. The idea
+is fairly simple: After a high school game, the game-film is uploaded to the site by a coach or player.
+Players (with accounts) who played in the game can then go in and create individualized clips (< 30 sec duration) from
+the game. Players can also tag other players in clips. The primary purpose is to allow athletes to build a profile full of content showcasing their talent in actual game situations.

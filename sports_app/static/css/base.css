@@ -1,0 +1,541 @@
+/* Start Universal Styling */
+
+*  {
+  margin: 0;
+  padding: 0;
+}
+
+.no-margin {
+    margin: 0px;
+}
+
+.right {
+    float: right;
+}
+
+.left {
+    float: left;
+}
+
+ul, ol {
+    list-style: none;
+}
+
+body {
+    background: #004756;
+    color: white;
+}
+
+.weak {
+    opacity: 0.4;
+}
+
+img:hover, 
+.glyphicon:hover {
+    cursor: pointer;
+}
+
+div.heading {
+    overflow: auto;
+}
+
+section div.content {
+    width: 922px;
+    margin: 0px auto;
+}
+
+/* End Universal Styling */
+
+
+/* Start Options Menu Styling */
+
+nav.options-menu {
+    position: fixed; 
+    z-index: 99;
+    background: white; 
+    height: 100%; 
+    color: black; 
+    width: 200px;
+    padding: 10px;
+    top: 0px;
+    left: 0px;
+}
+
+nav.options-menu ul#options-list li {
+    padding: 8px;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    border-radius: 5px;
+}
+
+nav.options-menu ul#options-list li:hover {
+    background: #EDF7F7;
+}
+
+span.badge {
+    margin-left: 10px;
+    background-color: steelblue;
+}
+
+nav.options-menu ul#notification-list li {
+    margin-left: 20px;
+    font-size: 10px;
+    font-weight: normal;
+}
+
+/* End Options Menu Styling */
+
+
+/* Start Profile Heading */
+
+section.player-info div.heading h1.header {
+    float: left;
+}
+
+section.player-info div.heading span.glyphicon-search, 
+section.player-info div.heading span.glyphicon-menu-hamburger {
+    float: right;
+    font-size: 2em;
+    margin-top: 25px;
+}
+
+section.player-info div.heading span.glyphicon-menu-hamburger {
+    margin-left: 20px;
+}
+
+section.player-info div.search-and-results {
+    margin-top: 25px;
+    float: right;
+    margin-left: 10px;
+    overflow: auto;
+}
+
+section.player-info div.heading input {
+    width: 200px;
+    float: left;
+}
+
+/* End Profile Heading */
+
+
+/* Start Game Modal Styling */
+
+div.player-stat-container {
+    padding: 10px;
+    border-radius: 5px;
+}
+
+font.view-gamestat {
+    color: steelblue;
+    cursor: pointer;
+    font-size: 1.3em;
+}
+
+div.gamestat-selectable:hover {
+    background: rgb(51, 122, 183);
+    cursor: pointer;
+}
+
+div.gamestat-selectable:hover a, 
+div.gamestat-selectable:hover font {
+    color: white;
+}
+
+div#game-header {
+    background: white;
+    padding: 15px;
+    top: calc(20% - 75px);
+    left: calc(50% - 400px);
+    position: fixed;
+    border-radius: 5px;
+    z-index: 100;
+}
+
+div#game-header div#teams {
+    margin-top: 7px; 
+    display: inline-block; 
+    color: black; 
+    font-size: 1.2em;
+    margin-right: 20px;
+}
+
+
+/* End Game Modal Styling */
+
+
+/* Start Gamestat Modal */
+
+div#gamestat-submodal-header div#info-container {
+    font-size: 1.2em;
+    margin-top: 5px;
+    margin-right: 20px;
+    display: inline-block;
+}
+
+div#gamestat-submodal-header {
+    background: white;
+    border-radius: 5px;
+    top: calc(20% - 75px);
+    left: calc(50% - 495px);
+    overflow: auto;
+    position: fixed;
+    padding: 15px;
+    color: black;
+    z-index: 100;
+}
+
+div#gamestat-submodal-progress {
+    background: white;
+    width: 990px;
+    padding-left: 20px;
+    padding-right: 20px;
+    border-radius: 5px;
+    top: calc(20% + 419px);
+    left: calc(50% - 495px);
+    position: fixed;
+    z-index: 100;
+}
+
+div#gamestat-clip-container {
+    margin-top: 10px;
+    margin-bottom: 10px;
+    padding: 0px 10px 10px 10px;
+    overflow: scroll;
+    height: 385px;
+    overflow-x: hidden;
+}
+
+div#gamestat-submodal-clips {
+    background: white;
+    border-radius: 5px;
+    top: 20%;
+    left: calc(50% - 495px);
+    position: fixed;
+    height: 410px;
+    z-index: 100;
+}
+
+div#gamestat-submodal-clips img {
+    display: block;
+}
+
+img.gamestat-video {
+    margin-bottom: 5px;
+}
+
+/* End Gamestat Modal */
+
+
+
+span.glyphicon.add-clip,
+span.glyphicon.glyphicon-ok {
+    color: rgb(62, 181, 62);
+    font-size: 0.7em;
+}
+
+span.not-watching {
+    color: orange;
+    font-size: 0.7em;
+}
+
+span.video-remove {
+    position: absolute;
+    color: firebrick;
+    font-size: 2em;
+    left: 110px;
+}
+
+div#clip-creation-bar,
+div.clip-bar {
+    height: 8px;
+    position: absolute;
+    border: 1px solid white;
+    border-radius: 5px;
+    top: calc(100% - 44px);
+    z-index: 100;
+    width: 0px;
+}
+
+div#clip-creation-bar {
+    background: orange;
+}
+
+div.clip-bar {
+    background: green;
+}
+
+
+
+img.wait-gif {
+    position: absolute;
+    top: 43px;
+    left: 44px;
+}
+
+.opaque {
+    opacity: 0.1;
+}
+
+div.video-modal {
+    top: 20%;
+    left: 50%;
+    margin-left: -400px;
+    padding: 15px;
+    border-radius: 5px;
+    background: white;
+    color: black;
+    position: fixed;
+    z-index: 100;
+}
+
+h5.no-content-uploaded {
+    text-align: center;
+    margin-top: 30px;
+}
+
+div.info {
+    margin-top: 15px;
+    overflow: auto;
+}
+
+img.prof-pic {
+    float: left;
+}
+
+div.highschool, div.physical, div.rankings {
+    float: left;
+    margin-left: 35px;
+}
+
+div.progress.stats {
+    margin-bottom: 0px;
+}
+
+div.progress.athleticism {
+    width: 200px;
+}
+
+ul.prof-blocks li,
+ul.prof-blocks li h1, {
+    display: inline;
+}
+
+ul.prof-blocks li p {
+    width: 30px;
+}
+
+div.spec-blocks {
+    overflow: auto;
+    margin: 10px 0px 0px 5px;
+}
+
+div.block {
+    float: left;
+    padding: 10px;
+    width: 110px;
+    text-align: center;
+}
+
+div.block h1 {
+    margin-top: 0px;
+    margin-bottom: 5px;
+}
+
+section:not('.video-modal') {
+    margin-bottom: 40px;
+}
+
+section:first-child {
+    margin-top: 20px;
+}
+
+ul.video-blocks {
+    margin: 0px;
+}
+
+section.game-stats h4 {
+    margin-top: 0px;
+}
+
+div.gamestat-content {
+    margin: 20px 0px;
+}
+
+div.gamestat-heading {
+    font-size: 20px; 
+}
+
+div.videos-holder {
+    background: rgb(0, 71, 86);
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+div.gamestat-block {
+    border: 5px solid white;
+    padding: 15px;
+    background: rgba(255, 255, 255, 0.13);
+    margin-bottom: 30px;
+    cursor: pointer;
+}
+
+span.glyphicon-ok.watching {
+    margin-left: 10px;
+}
+
+div.gamestat-block div.game-info,
+div.gamestat-block div.clips {
+    display: inline-block;
+}
+
+div.gamestat-block div.clips {
+    margin-left: 50px;
+}
+
+div.gamestat-block div.game-info img {
+    float: left;
+}
+
+div.gamestat-block div.game-info img:last-child {
+    margin-left: 10px;
+}
+
+img.view-marker {
+    position: absolute;
+    top: 0px;
+    left: 80px;
+}
+
+div.view-count {
+    position: absolute;
+    top: 0px;
+    left: 95px;
+    width: 40px;
+    text-align: center;
+}
+
+h5.view-count {
+    font-weight: bold;
+    margin-top: 5px;
+}
+
+img.video {
+    border-radius: 0px;
+}
+
+div.feed-clip {
+    border-radius: 5px;
+    padding: 15px;
+    background: rgba(255, 255, 255, 0.13);
+    margin-bottom: 30px;
+}
+
+
+/* Clip and Comments Styling */
+
+button.star-btn {
+    float: right;
+    margin-right: 5px;
+}
+
+div.cc-right-container div.cc-options img {
+    float: left;
+}
+
+div.cc-right-container div.cc-options h4 {
+    display: inline-block;
+    margin: 0px;
+}
+
+div.cc-right-container div.cc-options {
+    overflow: auto;
+    margin-bottom: 20px;
+}
+
+div.cc-left-container {
+    width: 500px; 
+    display: inline-block; 
+    vertical-align: top; 
+    margin-right: 10px;
+}
+
+div.cc-right-container,
+div.game-gamestats-container {
+    width: 350px; 
+    display: inline-block; 
+    vertical-align: top;
+}
+
+ul.comments {
+    height: 257px;
+    overflow-y: scroll;
+}
+
+ul.comments li.comment {
+    margin-bottom: 15px;
+    overflow: auto;
+}
+
+ul.comments img {
+    float: left;
+}
+
+ul.comments li.comment div.content {
+    display: inline-block;
+    width: 260px;
+    margin-left: 10px;
+}
+
+/* End Clip and Comments Styling */
+
+div.create-clip, 
+div.cancel-clip-creation, 
+div.save-clip-creation, 
+div.delete-clip, 
+div.edit-clip,
+div.save-clip-edit, 
+div.revert-clip,
+div.replay-clip {
+    position: absolute;
+    padding: 20px;
+    left: 87%;
+    top: 25px;
+    z-index: 101;
+    border-radius: 12px;
+}
+
+div.replay-clip {
+    left: calc(50% - 42px);
+    top: 40%;
+}
+
+div.save-clip-creation, 
+div.save-clip-edit,
+div.replay-clip {
+    background-color: rgba(58, 161, 71, 0.75);
+}
+
+div.create-clip, 
+div.edit-clip {
+    background-color: rgba(70, 130, 180, 0.75);
+}
+
+div.cancel-clip-creation, 
+div.delete-clip, 
+div.revert-clip {
+    background-color: rgba(180, 70, 95, 0.75);
+    top: 115px;
+}
+
+div.create-clip span,
+div.save-clip-creation span,
+div.cancel-clip-creation span,
+div.edit-clip span,
+div.delete-clip span,
+div.save-clip-edit span,
+div.revert-clip span,
+div.replay-clip span {
+    font-size: 40px;
+    color: white;
+}

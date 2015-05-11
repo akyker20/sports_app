@@ -1,0 +1,8 @@
+{% load gamefilm_editting %}
+
+
+{% for clip in gamefilm_clips.all %}
+
+	{% generate_clipbar gamefilm_clip=clip %}
+
+{% endfor %}

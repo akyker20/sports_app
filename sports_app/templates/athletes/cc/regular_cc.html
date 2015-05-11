@@ -1,0 +1,11 @@
+{% extends 'athletes/cc/base_cc.html' %}
+
+{% block clip_options %}
+
+{% load athlete_actions %}
+    
+    <button class="right btn btn-success">Share</button>
+
+    {% athlete_starred model_instance=clip user=user %}
+
+ {% endblock %}

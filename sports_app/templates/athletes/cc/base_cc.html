@@ -1,0 +1,37 @@
+
+{% load universal %}
+
+<div class="cc-left-container">
+  <div class="video-wrapper" style="position: relative">
+    <video id="movie" width="100%"  preload="none">
+        {% if clip and clip|get_class == 'GameFilmClip' %}
+          <source src="{{ clip.url }}" type="video/mp4">
+        {% endif %}
+    </video>
+    <div class="replay-clip" style="display: none">
+      <span class="glyphicon glyphicon-repeat"></span>
+    </div>
+  </div>
+</div>
+
+<div class="cc-right-container">
+  
+  <div class="cc-options" data-id="{{clip.id}}" data-type="clip">
+
+    {% if clip %}
+      <div class="left">
+        <h4>{{ clip.athlete }}</h4>
+        <h5 class="weak no-margin">{{clip.athlete.current_team }}</h5>
+      </div>
+    {% endif %}
+
+    {% block clip_options %}{% endblock %}
+  </div>
+  
+  <ul class="comments">
+    {% for comment in comments %}
+      {% include 'athletes/comment.html' with comment=comment %}
+    {% endfor %}
+  </ul>
+  <textarea type="text" rows="2" class="form-control" placeholder="Comment" data-type="{{type}}" data-id="{{id}}"/></textarea>
+</div>

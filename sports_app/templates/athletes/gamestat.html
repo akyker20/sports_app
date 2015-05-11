@@ -1,0 +1,22 @@
+<div class="gamestat-block" data-id="{{ stat.id }}">
+
+  <div class="gamestat-heading">
+    {{stat.athlete}} 
+    <font style="opacity: .4">against</font>
+      {% if stat.athlete.current_team != stat.game.home_team %}
+        {{stat.game.home_team}}
+      {% else %}
+        {{stat.game.away_team}}
+      {% endif %}  
+    <div class="right">{{stat.game.date}}</div>
+  </div>
+
+  <div class="videos-holder">
+    {% for clip in stat.clips.all %}
+        <img height="50" width="50" src="{{STATIC_URL}}images/player.jpg" data-clip-id="{{clip.id}}">
+    {% endfor %}
+  </div>
+
+  {% include 'athletes/gamestat-progressbar.html' with stat=stat %}
+
+</div>

@@ -1,0 +1,43 @@
+
+<div id="gamestat-submodal-header">
+
+	<div id="info-container">
+		{{stat.athlete}} 
+	    <font class="weak">against</font>
+	      {% if stat.athlete.current_team != stat.game.home_team %}
+	        {{stat.game.home_team}}
+	      {% else %}
+	        {{stat.game.away_team}}
+	      {% endif %} 
+	      <font class="weak"> ({{stat.game.date}})</font>
+    </div>
+
+    <button class="btn btn-primary" id="gamestat-view-game" data-game-id="{{ stat.game.id }}">
+		View Game
+	</button>
+
+</div>
+
+<div id="cc-container">
+	{% if clip %}
+		{% include 'athletes/video_display_modal.html' with clip=clip comments=clip.comments.all type="clip" id=clip.id %}
+	{% endif %}
+</div>
+
+<div id="gamestat-submodal-clips">
+	<div id="gamestat-clip-container">
+    {% for clip in stat.game.gamefilm.clips.all %}
+        <img class="gamestat-video weak" height="50" width="50" src="{{STATIC_URL}}images/player.jpg" data-clip-id="{{clip.id}}">
+    {% endfor %}
+	</div>
+</div>
+
+<div id="gamestat-submodal-progress">
+  <div class="progress stats" style="margin-top: 20px; height: 25px">
+    <div id="rebounds" data-rebounds="{{stat.rebounds}}" class="progress-bar progress-bar-success" style="width: 0%"></div>
+    <div id="blocks" data-blocks="{{stat.blocks}}" class="progress-bar progress-bar-info" style="width: 0%"></div>
+    <div id="steals" data-steals="{{stat.steals}}" class="progress-bar progress-bar-primary" style="width: 0%"></div>
+    <div id="assists" data-assists="{{stat.assists}}" class="progress-bar progress-bar-warning" style="width: 0%"></div>
+    <div id="points" data-points="{{stat.points}}" class="progress-bar progress-bar-danger" style="width: 0%"></div>
+  </div>
+</div>

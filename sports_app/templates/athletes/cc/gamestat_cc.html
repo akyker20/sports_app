@@ -1,0 +1,14 @@
+{% extends 'athletes/cc/base_cc.html' %}
+
+
+{% block 'clip_options' %}
+
+{% load athlete_actions %}
+
+    <button class="right btn btn-success">Share</button>
+
+    {% athlete_starred model_instance=clip user=user %}
+
+    <button data-game-id="{{clip.gamefilm.game.id}}" class="view-game right btn btn-primary">View Game</button>
+
+ {% endblock %}

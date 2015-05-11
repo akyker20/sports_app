@@ -1,0 +1,28 @@
+<div id="game-header">
+  <div id="teams">
+    {{game.home_team}} vs. {{game.away_team}}
+  </div>
+  <div style="display: inline-block; float: right">
+    <button class="btn btn-primary" id="game-comments">Game Comments</button>
+    <button class="btn btn-primary" id="game-gamestats">Player Stats</button>
+  </div>
+</div>
+
+<div class="video-modal">
+
+	{% include 'athletes/cc/game_cc.html' with game=game comments=game.comments.all type="game" %}
+
+  <div style="display: none" class="game-gamestats-container">
+	{% for stat in game.gamestat_set.all %}
+    <div data-id="{{stat.id}}" class="player-stat-container {% if stat.game.gamefilm.clips %} gamestat-selectable {% endif %}">
+      <a href="{% url 'athlete_profile_with_id' stat.athlete.id %}">#{{stat.athlete.number}} {{stat.athlete}}</a>
+      {% if stat.game.gamefilm.clips %}
+        <font class="right glyphicon glyphicon-film view-gamestat" data-id="{{stat.id}}"></font>
+      {% endif %}
+      
+      {% include 'athletes/gamestat-progressbar.html' with stat=stat %}
+
+    </div>
+	{% endfor %}
+  </div>
+</div>

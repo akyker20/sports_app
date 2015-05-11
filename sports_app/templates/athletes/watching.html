@@ -1,0 +1,5 @@
+{% if watching_player %}
+      <span data-athlete-id="{{athlete_id}}" class="watching glyphicon glyphicon-ok">watching</span>
+{% else %}
+      <span data-athlete-id="{{athlete_id}}" class="not-watching glyphicon glyphicon-plus">watch</span>
+{% endif %}

@@ -1,0 +1,27 @@
+<div class="video-modal" data-gamefilm-id="{{gamefilm.id}}" data-mpd-url="{{gamefilm.mpd_url}}">
+	{% include 'athletes/gamefilm_clipbars.html' with gamefilm_clips=gamefilm.clips %}
+	<div id="clip-creation-bar" style="display: none"></div>
+	<div class="create-clip">
+		<span class="glyphicon glyphicon-scissors"></span>
+	</div>
+	<div class="save-clip-creation" style="display: none">
+		<span class="glyphicon glyphicon-floppy-disk"></span>
+	</div>
+	<div class="cancel-clip-creation" style="display: none">
+		<span class="glyphicon glyphicon-remove"></span>
+	</div>
+	<div class="edit-clip" style="display: none">
+		<span class="glyphicon glyphicon-pencil"></span>
+	</div>
+	<div class="delete-clip" style="display: none">
+		<span class="glyphicon glyphicon-remove"></span>
+	</div>
+
+	<div class="save-clip-edit" style="display: none">
+		<span class="glyphicon glyphicon-floppy-disk"></span>
+	</div>
+	<div class="revert-clip" style="display: none">
+		<span class="glyphicon glyphicon-repeat"></span>
+	</div>
+	{% include 'athletes/video.html' with width='800px' %}
+</div>

@@ -1,0 +1,16 @@
+{% if not user.is_authenticated %}  
+          
+  <form style="float: right" method="post" action="{% url 'login' %}">
+    {% csrf_token %%}
+    <span class="form-group"> 
+      <label style="color: white">Username</label>
+      <input style="color: black" id="id_username" name="username" placeholder="username" type="text">
+    </span>
+    <span class="form-group"> 
+      <label style="color: white">Password</label>  
+      <input style="color: black" id="id_password" name="password" placeholder="password" type="password">
+    </span>
+    <button type="submit" class="btn btn-primary">Log in</button>
+  </form> 
+
+{% endif %}

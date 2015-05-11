@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<section class="top10">
+	<div class="content">
+    <h1 class="header">Weekly Top 10</h1>
+		<ul>
+		{% for clip in clips %}
+		<li>
+			<div class="feed-clip">
+				{% include 'athletes/clip_and_comments.html' with clip=clip type="clip" id=clip.id comments=clip.comments.all %}
+			</div>
+		</li>
+		{% endfor %}
+		</ul>
+	</div>
+</section>
+
+{% endblock %}

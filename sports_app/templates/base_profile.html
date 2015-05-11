@@ -1,0 +1,137 @@
+{% extends "base.html" %}
+
+{% block additional_stylesheets %}
+  {% load static %}
+  <link rel="stylesheet" type="text/css" href="{% static 'gridster/dist/jquery.gridster.min.css' %}">
+  <link rel="stylesheet" type="text/css" href="{{STATIC_URL}}css/profile.css">
+{% endblock %}
+
+
+{% block content %} 
+
+{% load athlete_profile %}
+
+<section class="player-info">
+  <div class="content">
+    <div class="heading">
+      <h1 class="header">{{ athlete }}
+        {% if athlete != user.athleteprofile %}
+          {% load athlete_watching %}
+          {% athlete_watching current_athlete=user.athleteprofile athlete=athlete %}
+        {% endif %}
+      </h1>
+      <div class="search-and-results hidden">
+        <input type="text" class="form-control" placeholder="Search">
+      </div>
+      <span class="glyphicon glyphicon-search"></span>
+    </div>
+    <div class="info">
+      <img class="prof-pic thumbnail" src="{{STATIC_URL}}images/player.jpg" height="175">
+      <div class="highschool">
+        <h5 style="margin-top: 0px">{{athlete.current_team.name}}</h5>
+        <h5>{{athlete.current_team.city}}, {{athlete.current_team.state}}</h5>
+        <img class="thumbnail" src="{{STATIC_URL}}images/parktudor.jpg" height="125">
+      </div>
+      <div class="physical">
+        <h5 style="margin-top: 0px">Height</h5>
+        <div class="progress athleticism">
+          <div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100" style="width: {{ athlete.height|calc_bar_height_width}}%">
+            {{ athlete.height|height}}
+          </div>
+        </div>
+        <h5 style="margin-top: 0px">Weight</h5>
+        <div class="progress">
+          <div class="progress-bar progress-bar-info" role="progressbar" aria-valuenow="20" aria-valuemin="0" aria-valuemax="100" style="width: {{ athlete.weight|calc_bar_weight_width}}%">
+            {{ athlete.weight}} lbs
+          </div>
+        </div>
+        <h5 style="margin-top: 0px">Vertical Leap</h5>
+        <div class="progress">
+          <div class="progress-bar progress-bar-warning" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: {{ athlete.vertical_leap|calc_bar_vertical_width}}%">
+            {{ athlete.vertical_leap}} in
+          </div>
+        </div>
+      </div>
+      <div class="rankings">
+        <div class="spec-blocks">
+          <div class="block">
+            <h1>{{watch_count}}</h1>
+            <h5>watching</h5>
+          </div>
+          <div class="block">
+            <h1>{{total_clip_views|format_view_count}}</h1>
+            <h5>clip views</h5>
+          </div>
+        </ul>
+        <div class="ranking-blocks">
+          <div class="block">
+            <h1>27</h1>
+            <h5>pos state rank</h5>
+          </div>
+          <div class="block">
+            <h1>52</h1>
+            <h5>state rank</h5>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+{% load universal %}
+
+<section class="clips">
+  <div class="content">
+    <h1 class="header">clips</h1>
+
+    {% if clips %}
+      <div class="gridster ready">
+        <ul class="video-blocks" style="height: 640px; width: 960px; position: relative;">
+          {% for clip in clips %}
+            <li data-row="1" data-col="1" data-sizex="1" data-sizey="1" class="gs-w" data-clip-id="{{clip.id}}">
+              {% if clip|get_class == 'UploadedClip' %}
+                <img class="thumbnail" height="130" width="130" src="https://s3.amazonaws.com/kykersports/{{clip.url}}_1.jpg">
+              {% else %}
+                <img class="thumbnail" height="130" width="130" src="{{STATIC_URL}}images/player.jpg">
+              {% endif %}
+              <img class="view-marker" src="{{STATIC_URL}}images/red_triangle.png" width="50">
+              <div class="view-count">
+                <h5 class="view-count">{{clip.view_count}}</h5>
+              </div>
+            </li>
+          {% endfor %}
+        </ul>
+      </div>
+    {% else %}
+      <h5 class="no-content-uploaded">No clips uploaded.</h3>
+    {% endif %}
+  </div>
+</section>
+
+<section class="game-stats">
+  <div class="content">
+    <h1 class="header">games</h1>
+
+    {% if not gamestats and athlete != user.athleteprofile %}
+      <h5 class="no-content-uploaded">No stats uploaded.</h3>
+    {% else %}
+
+      {% for stat in gamestats %}
+        {% include 'athletes/gamestat.html' with stat=stat athlete=athlete %}
+      {% endfor %}
+
+    {% endif %}
+
+  </div>
+</section>
+
+{% endblock %}
+
+
+{% block additional_javascript %}
+  <script type="text/javascript" src="{% static 'gridster/dist/jquery.gridster.min.js' %}"></script>
+  <script type="text/javascript" src="{{STATIC_URL}}js/profile/search_bar.js"></script>
+  <script type="text/javascript" src="{{STATIC_URL}}js/profile/watch_button.js"></script>
+  {% block profile_js %}{% endblock %}
+  <script type="text/javascript" src="{{STATIC_URL}}js/profile/athlete_profile.js"></script>
+{% endblock %}

@@ -257,8 +257,39 @@ div.gamestat-block {
     width: 500px;
 }
 
-
 /* End Gamestat Block */
+
+
+/* Start Watching Page */
+
+div.watching-player-info {
+    text-align: center;
+}
+
+div.watching-player-info h5 {
+    margin-bottom: 0px;
+}
+
+section.watching ul li {
+    width: 160px;
+    display: inline-block;
+    margin-bottom: 20px;
+    margin-top: 20px;
+}
+
+section.watching ul li img {
+    margin: 0px auto;
+}
+
+section.watching ul li img:hover {
+    background-color: steelblue;
+}
+
+
+
+
+
+/* End Watching Page */
 
 
 span.glyphicon.add-clip,

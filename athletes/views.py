@@ -16,6 +16,7 @@ from star_factory import build_star
 from django.db.models import Count, Sum
 from django.core.cache import cache
 from decimal import Decimal
+from operator import itemgetter
 
 def register(request):
 	form = AthleteCreationForm()
@@ -50,7 +51,6 @@ def feed(request):
 			feed_objects.append(clips[0])
 			clips = clips[1:]
 	return render(request, 'athletes/feed.html', {"feed_objects": feed_objects, "athlete": athlete })
-
 
 
 @csrf_exempt
@@ -133,11 +133,20 @@ def star(request):
 def top10(request):
 	cache_key = 'top10_clips'
 	cache_time = 300
-	clips = cache.get(cache_key)
-	if not clips:
-		clips = Clip.objects.filter(created_at__gte=datetime.datetime.now() - datetime.timedelta(weeks=1)).annotate(star_count=Count('stars')).order_by('-star_count')[:10]
-		cache.set(cache_key, clips, cache_time)
-	return render(request, 'athletes/top10.html', {"clips":clips})
+	top10_clips = cache.get(cache_key)
+	if not top10_clips:
+		weekly_clips = Clip.objects.filter(created_at__gte=datetime.datetime.now() - datetime.timedelta(weeks=1))
+		weekly_clips_tuples = map(compute_popularity, weekly_clips)
+		weekly_clips_tuples.sort(key=itemgetter(0), reverse=True)
+		top10_clips = [Clip.objects.get(id=tup[1]) for tup in weekly_clips_tuples[0:10]]
+		cache.set(cache_key, top10_clips, cache_time)
+	return render(request, 'athletes/top10.html', {"clips":top10_clips})
+
+
+
+
+def compute_popularity(clip):
+	return (5*clip.stars.count() + clip.view_count, clip.id)
 
 
 def get_gamestat(request):
@@ -187,6 +196,12 @@ def play_gamefilm(request):
 		film_id = request.GET["gamefilm-id"]
 		gamefilm = GameFilm.objects.get(pk=int(film_id))
 		return render(request, 'athletes/gamefilm_display_modal.html', {"gamefilm":gamefilm})
+
+@group_required('athletes')
+def watching(request):
+	athlete = request.user.athleteprofile
+	players_watching = athlete.watching.order_by("athlete__first_name")
+	return render(request, 'athletes/watching_page.html', { "players_watching": players_watching })
 
 
 @csrf_exempt

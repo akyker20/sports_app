@@ -17,6 +17,7 @@ urlpatterns = patterns('',
     url(r'^delete_gamefilm_clip$', 'athletes.views.delete_gamefilm_clip'),
     url(r'^update_gamefilm_clip$', 'athletes.views.update_gamefilm_clip'),
     url(r'^show_game$', 'athletes.views.show_game'),
-    url(r'^get_gamestat$', 'athletes.views.get_gamestat')
+    url(r'^get_gamestat$', 'athletes.views.get_gamestat'),
+    url(r'^watching$', 'athletes.views.watching', name='watching')
     # url(r'^get_dash_info', 'athletes.views.get_dash_info'),
 )

@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+
+
+{% block content %}
+
+<section class="watching">
+  <div class="content">
+    <h1 class="header">Watching ({{players_watching.count}})</h1>
+  	<ul>
+  		{% for player in players_watching.all %}
+  		<li>
+        <a href="{% url 'athlete_profile_with_id' player.id %}">
+          <img class="thumbnail" width="100px" src="{{STATIC_URL}}images/player.jpg">
+        </a>
+        <div class="watching-player-info">
+  			  <h5>{{player}}</h5>
+  			  <font class="weak"> {{player.current_team}}</font>
+        </div>
+  		</li>
+  		{% endfor %}
+  	</ul>
+  </div>
+</section>
+
+
+
+{% endblock %}

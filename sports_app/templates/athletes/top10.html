@@ -8,7 +8,7 @@
 		{% for clip in clips %}
 		<li>
 			<div class="feed-clip">
-				{% include 'athletes/clip_and_comments.html' with clip=clip type="clip" id=clip.id comments=clip.comments.all %}
+				{% include 'athletes/cc/regular_cc.html' with clip=clip type="clip" id=clip.id comments=clip.comments.all %}
 			</div>
 		</li>
 		{% endfor %}

@@ -13,8 +13,16 @@
     float: right;
 }
 
+.fix-display {
+    display: inline-block;
+}
+
 .left {
     float: left;
+}
+
+img.thumbnail.img-selectable:hover {
+    background-color: steelblue;
 }
 
 ul, ol {
@@ -260,6 +268,39 @@ div.gamestat-block {
 /* End Gamestat Block */
 
 
+/* Start top 10 */
+
+div.top10-categories {
+    width: 600px;
+    margin-left: 30px;
+    display: inline-block;
+}
+
+section.top10 div.header-container {
+    margin-top: 20px;
+}
+
+section.top10 ul li {
+    margin-top: 30px;
+}
+
+div.top10-stat-holder, 
+div.top10-player-info,
+img.top10-img {
+    display: inline-block;
+    margin-right: 40px;
+    text-align: center;
+}
+
+div.top10-player-info {
+    width: 180px;
+}
+
+
+
+/* End top 10 */
+
+
 /* Start Watching Page */
 
 div.watching-player-info {
@@ -279,10 +320,6 @@ section.watching ul li {
 
 section.watching ul li img {
     margin: 0px auto;
-}
-
-section.watching ul li img:hover {
-    background-color: steelblue;
 }
 
 

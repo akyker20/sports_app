@@ -10,7 +10,7 @@
   		{% for player in players_watching.all %}
   		<li>
         <a href="{% url 'athlete_profile_with_id' player.id %}">
-          <img class="thumbnail" width="100px" src="{{STATIC_URL}}images/player.jpg">
+          <img class="img-selectable thumbnail" width="100px" src="{{STATIC_URL}}images/player.jpg">
         </a>
         <div class="watching-player-info">
   			  <h5>{{player}}</h5>

@@ -140,7 +140,7 @@ def top10(request):
 		weekly_clips_tuples.sort(key=itemgetter(0), reverse=True)
 		top10_clips = [Clip.objects.get(id=tup[1]) for tup in weekly_clips_tuples[0:10]]
 		cache.set(cache_key, top10_clips, cache_time)
-	return render(request, 'athletes/top10.html', {"clips":top10_clips})
+	return render(request, 'athletes/top10.html', {"clips":top10_clips, "athlete": request.user.athleteprofile })
 
 
 

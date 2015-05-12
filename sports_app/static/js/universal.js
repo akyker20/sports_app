@@ -13,14 +13,16 @@ $(document).ready(function(){
     this.end_time = end;
   }
 
-  var gridster = $(".gridster ul").gridster({
+  if($(".gridster ul").length) {
+      var gridster = $(".gridster ul").gridster({
       widget_margins: [10, 10],
       widget_base_dimensions: [130, 130],
       // resize.enabled: false
-  }).data('gridster');
+    }).data('gridster');
 
-  if(gridster) {
-    gridster.$widgets.click(playRegularVideo);
+    if(gridster) {
+      gridster.$widgets.click(playRegularVideo);
+    }
   }
 
 
@@ -86,6 +88,9 @@ $(document).ready(function(){
 	$('button.star').click(star);
 
   $('section.video-modal').on("click", "button#gamestat-view-game", displayGameModal);
+
+
+  $('section.top10 ul li img.img-selectable').click(playRegularVideo);
 
   function playRegularVideo() {
     var clip_id = $(this).data('clip-id');

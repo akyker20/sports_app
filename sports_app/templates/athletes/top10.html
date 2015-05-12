@@ -3,12 +3,42 @@
 {% block content %}
 <section class="top10">
 	<div class="content">
-    <h1 class="header">Weekly Top 10</h1>
+    <div class="header-container">
+      <h1 class="header fix-display">Weekly Top 10</h1>
+      <div class="top10-categories" data-example-id="simple-nav-justified">
+  	    <ul class="nav nav-tabs nav-justified">
+  	      <li role="presentation" class="active"><a href="#">Overall</a></li>
+  	      <li role="presentation"><a href="#">Dunks</a></li>
+  	      <li role="presentation"><a href="#">Crossovers</a></li>
+          <li role="presentation"><a href="#">Games</a></li>
+  	    </ul>
+  	  </div>
+    </div>
 		<ul>
 		{% for clip in clips %}
 		<li>
-			<div class="feed-clip">
-				{% include 'athletes/cc/regular_cc.html' with clip=clip type="clip" id=clip.id comments=clip.comments.all %}
+			<img data-clip-id="{{clip.id}}" class="top10-img img-selectable thumbnail" 
+      width="150px" src="{{STATIC_URL}}images/player.jpg">
+			<div class="top10-player-info">
+				<h4>{{ clip.athlete }}</h4>
+				<h5 class="weak">{{ clip.athlete.current_team }}</h5>
+				<h5 class="weak">{{ clip.created_at }}</h5>
+			</div>
+			<div class="top10-stat-holder">
+				<button class="btn btn-primary">Shares</button>
+				<h4>45</h4>
+			</div>
+			<div class="top10-stat-holder">
+				<button class="btn btn-primary">Likes</button>
+				<h4>{{ clip.stars.count }} </h4>
+			</div>
+			<div class="top10-stat-holder">
+				<button class="btn btn-primary">Views</button>
+				<h4>{{ clip.view_count }}</h4>
+			</div>
+			<div class="top10-stat-holder">
+				<button class="btn btn-success">Total Points</button>
+				<h4>105</h4>
 			</div>
 		</li>
 		{% endfor %}

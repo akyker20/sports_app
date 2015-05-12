@@ -1,5 +1,5 @@
-<div class="video-modal" data-gamefilm-id="{{gamefilm.id}}" data-mpd-url="{{gamefilm.mpd_url}}">
-	{% include 'athletes/gamefilm_clipbars.html' with gamefilm_clips=gamefilm.clips %}
+<div style="top: 5%" class="video-modal" data-gamefilm-id="{{gamefilm.id}}" data-mpd-url="{{gamefilm.mpd_url}}">
+	{% include 'athletes/gamefilm_clipbars.html' with gamefilm_clips=gamefilm_clips %}
 	<div id="clip-creation-bar" style="display: none"></div>
 	<div class="create-clip">
 		<span class="glyphicon glyphicon-scissors"></span>
@@ -23,5 +23,12 @@
 	<div class="revert-clip" style="display: none">
 		<span class="glyphicon glyphicon-repeat"></span>
 	</div>
-	{% include 'athletes/video.html' with width='800px' %}
+	
+	<div class="video-wrapper" style="position: relative">
+    <video id="movie" width="800px"  preload="none" controls>
+    </video>
+    <div class="replay-clip" style="display: none">
+      <span class="glyphicon glyphicon-repeat"></span>
+    </div>
+  </div>
 </div>

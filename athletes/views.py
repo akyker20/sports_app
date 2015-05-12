@@ -193,9 +193,11 @@ def play_clip(request):
 @group_required('athletes')
 def play_gamefilm(request):
 	if request.is_ajax() and request.method == "GET":
+		athlete = request.user.athleteprofile
 		film_id = request.GET["gamefilm-id"]
 		gamefilm = GameFilm.objects.get(pk=int(film_id))
-		return render(request, 'athletes/gamefilm_display_modal.html', {"gamefilm":gamefilm})
+		gamefilm_clips = athlete.gamestat_set.get(game=gamefilm.game).clips.all()
+		return render(request, 'athletes/gamefilm_display_modal.html', {"gamefilm_clips":gamefilm_clips, "gamefilm": gamefilm })
 
 @group_required('athletes')
 def watching(request):
@@ -212,9 +214,20 @@ def create_gamefilmclip(request):
 		gamefilm = GameFilm.objects.get(pk=int(request.POST['gamefilm_id']))
 		start_time = Decimal(request.POST['start_time'])
 		end_time = Decimal(request.POST['end_time'])
-		GameFilmClip.objects.create(athlete=athlete, gamefilm_start_time=start_time,
-									gamefilm_end_time=end_time, gamefilm=gamefilm)
-		return render(request, 'athletes/gamefilm_clipbars.html', { "gamefilm_clips":gamefilm.clips })
+
+		import pdb; pdb.set_trace();
+		if not athlete.gamestat_set.filter(game=gamefilm.game).exists():
+			gamestat = athlete.gamestat_set.create(game=gamefilm.game)
+		else:
+			gamestat = athlete.gamestat_set.first()
+
+		GameFilmClip.objects.create(athlete=athlete, 
+									gamefilm_start_time=start_time,
+									gamefilm_end_time=end_time, 
+									game=gamefilm.game, 
+									gamestat=gamestat)
+
+		return render(request, 'athletes/gamefilm_clipbars.html', { "gamefilm_clips":gamestat.clips.all() })
 
 @csrf_exempt
 @group_required('athletes')

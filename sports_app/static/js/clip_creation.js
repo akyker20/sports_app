@@ -71,6 +71,7 @@ $(document).ready(function(){
 		});
 	}
 
+
 	function delete_clip() {
 		if(selected_clip_id) {
 			$.ajax({
@@ -79,12 +80,16 @@ $(document).ready(function(){
 				data: { "clip_id":selected_clip_id }
 			}).success(function() {
 				clip_bar.fadeOut();
+				$('div.clip-bar:hidden').remove();
 				hide_all_options();
 				$('div.create-clip').fadeIn();
 			});
 		}
 	}
 
+	//When a clip is selected, the green click bar disappears and is
+	//replaced by the orange creation bar div that assumes its width
+	//and position.
 	function handle_clip_bar_click() {
 		if(!clip_creation_in_progress) {
 			$('div.clip-bar:hidden').show();
@@ -166,8 +171,13 @@ $(document).ready(function(){
 
 	function start_clip_creation_timer() {
 		clip_timer = setInterval(function(){
-			var new_width = [(video.currentTime - clip_start_time)/video.duration]*BUFFERED_CONTROL_WIDTH;
-			clip_bar.css('width', new_width + 'px');
+			if(video.currentTime < clip_start_time) {
+				end_clip_creation();
+			}	
+			else {
+				var new_width = [(video.currentTime - clip_start_time)/video.duration]*BUFFERED_CONTROL_WIDTH;
+				clip_bar.css('width', new_width + 'px');
+			}
 		}, TIMER_SPEED);
 	}
 

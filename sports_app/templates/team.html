@@ -1,0 +1,40 @@
+{% extends 'base.html' %}
+
+
+{% block content %}
+<section class="team-heading">
+	<div class="content">
+		<h1>{{team}}</h1> 
+	</div>
+</section>
+<section class="team-options">
+  <div class="content">
+  	<div data-example-id="simple-nav-justified">
+      <ul class="nav nav-tabs nav-justified">
+        <li role="presentation" data-id="players" class="active"><a href="#">Players</a></li>
+        <li role="presentation" data-id="stats"><a href="#">Stats</a></li>
+        <li role="presentation" data-id="games"><a href="#">Games</a></li>
+      </ul>
+    </div>
+  </div>
+</section>
+<section class="team-payload">
+  <div class="content">
+    <div class="players">
+      {% include 'athletes/athlete_listing.html' with players=team.athletes.all %}
+    </div>
+    <div class="stats" style="display: none">
+      <ul>
+        {% for player in team.athletes.all %}
+        <li style="margin-top: 20px">
+          <h4>#{{player.number}} {{player}}</h4>
+          {% include 'athletes/gamestat-progressbar.html' with reb=player.avg_rebounds blks=player.avg_blocks stls=player.avg_steals asts=player.avg_assists pts=player.avg_points %}
+        </li>
+        {% endfor %}
+      </ul>
+    </div>
+    <div class="games" style="display: none">
+    </div>
+  </div>
+</section>
+{% endblock %}  

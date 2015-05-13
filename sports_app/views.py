@@ -6,6 +6,7 @@ from django.http import HttpResponse
 from django.shortcuts import render, redirect
 from datetime import date
 from sports_app.decorators import group_required
+from athletes.models import Team
 
 
 
@@ -32,3 +33,7 @@ def logout_user(request):
   logout(request)
   return redirect('home')
 
+
+def team(request, team_id):
+	team = Team.objects.get(id=int(team_id))
+	return render(request, 'team.html', { "team":team })

@@ -20,7 +20,7 @@ class Command(BaseCommand):
 
 		for index, name in enumerate(team_names):
 			team = Team.objects.create(name=name, city=team_cities[index], state="Indiana")
-			coach = CoachProfile.objects.create(coach=User.objects.create(username=coaches[index], first_name=coaches[index], password="password"),
+			coach = CoachProfile.objects.create(coach=User.objects.create_user(username=coaches[index].replace(" ", ""), first_name=coaches[index], password="password"),
 								 				date_of_birth=date(1974, 11, 7), 
 								 				current_team=team)
 			print "generated team {}...".format(team.name)

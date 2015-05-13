@@ -12,5 +12,6 @@ urlpatterns = patterns('',
     url(r'^$', 'sports_app.views.home', name='home'),
     url(r'^logout$', 'sports_app.views.logout_user', name='logout'),
     url(r'^login$', 'sports_app.views.login_user', name='login'),
+    url(r'^team/(?P<team_id>\d+)$', 'sports_app.views.team', name='team')
 
 )

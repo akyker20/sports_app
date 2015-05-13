@@ -17,6 +17,6 @@
     {% endfor %}
   </div>
 
-  {% include 'athletes/gamestat-progressbar.html' with stat=stat %}
+  {% include 'athletes/gamestat-progressbar.html' with reb=stat.rebounds blks=stat.blocks stls=stat.steals asts=stat.assists pts=stat.points %}
 
 </div>

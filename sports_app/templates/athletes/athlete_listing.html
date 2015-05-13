@@ -1,0 +1,13 @@
+<ul class="athlete-listing">
+	{% for player in players %}
+	<li>
+    <a href="{% url 'athlete_profile_with_id' player.id %}">
+      <img class="img-selectable thumbnail" width="100px" src="{{STATIC_URL}}images/player.jpg">
+    </a>
+    <div class="watching-player-info">
+		  <h5>{{player}}</h5>
+		  <font class="weak"> {{player.current_team}}</font>
+    </div>
+	</li>
+	{% endfor %}
+</ul>

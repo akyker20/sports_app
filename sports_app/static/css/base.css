@@ -55,6 +55,16 @@ section div.content {
 /* End Universal Styling */
 
 
+/* Team Page */
+
+
+
+
+
+
+/* End Team Page */
+
+
 /* Start Options Menu Styling */
 
 nav.options-menu {
@@ -311,14 +321,14 @@ div.watching-player-info h5 {
     margin-bottom: 0px;
 }
 
-section.watching ul li {
+ul.athlete-listing li {
     width: 160px;
     display: inline-block;
     margin-bottom: 20px;
     margin-top: 20px;
 }
 
-section.watching ul li img {
+ul.athlete-listing li img {
     margin: 0px auto;
 }
 

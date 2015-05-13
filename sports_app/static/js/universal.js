@@ -297,10 +297,10 @@ $(document).ready(function(){
   const MIN_STAT_BAR_WIDTH = 5;
 
   const statWeights = {
-    'points': 1,
-    'assists': 2,
+    'points': 2,
+    'assists': 3,
     'blocks': 3,
-    'rebounds': 1,
+    'rebounds': 2,
     'steals': 3,
   }
 
@@ -313,7 +313,7 @@ $(document).ready(function(){
   }
 
 
-  // fillAllVisibleGamestats($('div.progress.stats'));
+  fillAllVisibleGamestats($('div.progress.stats'));
 
   function fillAllVisibleGamestats(gamestats) {
     gamestats.each(function( index ) {
@@ -352,6 +352,31 @@ $(document).ready(function(){
         }, 200);
       });
   }
+
+  // TEAM JS
+
+  $('section.team-options ul.nav li').click(function(){
+    var previouslyActiveLI = $('section.team-options ul.nav li.active');
+    var clickedLI = $(this);
+
+    if(!clickedLI.hasClass("active")) {
+      var divStr = "section.team-payload div.";
+
+      $(divStr + previouslyActiveLI.data('id')).fadeOut(function() {
+        $(divStr + clickedLI.data('id')).fadeIn();
+
+      });
+
+      previouslyActiveLI.removeClass("active");
+      clickedLI.addClass("active");
+    }
+
+  });
+
+
+
+
+
 
 
   //END GAMESTATS JS

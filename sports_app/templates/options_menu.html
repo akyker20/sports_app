@@ -15,8 +15,10 @@
       <li><a href="{% url 'watching' %}">Watching</a></li>
       <li>Rankings</li>
       <li>Games</li>
+      <li><a href="{% url 'team' user.athleteprofile.current_team.id %}">My Team</a></li>
       
     {% endif %}
+
 
     {% if user.is_authenticated %}  
       <li>

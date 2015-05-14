@@ -1,7 +1,7 @@
 <div class="comments">
 	<ul class="comments">
 		{% for comment in comments %}
-			{% include 'athletes/comment.html' with comment=comment %}
+			{% include 'athletes/cc/comment.html' with comment=comment %}
 		{% endfor %}
 	</ul>
 	<input type="text" data-id="{{id}}" data-type="{{type}}" class="form-control" placeholder="Search">

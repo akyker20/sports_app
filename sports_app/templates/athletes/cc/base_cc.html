@@ -20,8 +20,12 @@
 
     {% if clip %}
       <div class="left">
-        <h4>{{ clip.athlete }}</h4>
-        <h5 class="weak no-margin">{{clip.athlete.current_team }}</h5>
+        <h4>
+          <a href="{% url 'athlete_profile_with_id' clip.athlete.id %}">
+            {{ clip.athlete }}
+          </a>
+        </h4>
+        <h5 class="weak no-margin">{{ clip.athlete.current_team }}</h5>
       </div>
     {% endif %}
 
@@ -30,8 +34,9 @@
   
   <ul class="comments">
     {% for comment in comments %}
-      {% include 'athletes/comment.html' with comment=comment %}
+      {% include 'athletes/cc/comment.html' with comment=comment %}
     {% endfor %}
   </ul>
-  <textarea type="text" rows="2" class="form-control" placeholder="Comment" data-type="{{type}}" data-id="{{id}}"/></textarea>
+  <textarea type="text" rows="2" class="form-control" placeholder="Comment" 
+            data-type="{{type}}" data-id="{{id}}"/></textarea>
 </div>

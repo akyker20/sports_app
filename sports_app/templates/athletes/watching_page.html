@@ -6,10 +6,8 @@
 <section class="watching">
   <div class="content">
     <h1 class="header">Watching ({{players_watching.count}})</h1>
-    {% include 'athletes/athlete_listing.html' with players=players_watching.all }
+    {% include 'athletes/athlete_listing.html' with players=players_watching.all %}
   </div>
 </section>
-
-
 
 {% endblock %}

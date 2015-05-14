@@ -6,7 +6,7 @@ register = template.Library()
 
 
 # Important: the constants used should correspond to the constants in clip_creation.js
-@register.inclusion_tag('athletes/gamefilm_clipbar.html')
+@register.inclusion_tag('athletes/gamefilm/gamefilm_clipbar.html')
 def generate_clipbar(gamefilm_clip):
 	gamefilm = gamefilm_clip.game.gamefilm
 	BUFFERED_CONTROL_WIDTH = 518

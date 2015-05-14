@@ -547,6 +547,9 @@ div.game-gamestats-container {
     width: 350px; 
     display: inline-block; 
     vertical-align: top;
+}
+
+div.game-gamestats-container {
     height: 370px;
     overflow: auto;
 }

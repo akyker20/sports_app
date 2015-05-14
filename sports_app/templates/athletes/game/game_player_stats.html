@@ -7,7 +7,7 @@
         <font class="right glyphicon glyphicon-film view-gamestat" data-id="{{stat.id}}"></font>
       {% endif %}
       
-        {% include 'athletes/gamestat-progressbar.html' with reb=stat.rebounds blks=stat.blocks stls=stat.steals asts=stat.assists pts=stat.points %}
+        {% include 'athletes/gamestat/gamestat-progressbar.html' with reb=stat.rebounds blks=stat.blocks stls=stat.steals asts=stat.assists pts=stat.points %}
     </li>
 {% endfor %}
 </ul>

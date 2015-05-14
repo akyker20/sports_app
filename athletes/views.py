@@ -82,10 +82,10 @@ def profile(request, athlete_id=None):
 	current_athlete = request.user.athleteprofile
 	if athlete_id is None or int(athlete_id) == current_athlete.id:
 		athlete = current_athlete
-		template = 'athletes/user_profile.html'
+		template = 'athletes/profile/user_profile.html'
 	else:
 		athlete = AthleteProfile.objects.get(pk=athlete_id)
-		template = 'athletes/other_profile.html'
+		template = 'athletes/profile/other_profile.html'
 	watch_count = athlete.watched_by.count()
 	athlete_clips = athlete.clip_set
 	total_clip_views = athlete_clips.aggregate(views=Sum('view_count'))['views']
@@ -101,7 +101,7 @@ def search(request):
 		searched_name = request.GET['search']
 		athlete_results = AthleteProfile.objects.filter(athlete__first_name__istartswith=searched_name)
 		context = { 'athlete_results': athlete_results }
-		return render(request, 'athletes/search_results.html', context)
+		return render(request, 'athletes/profile/search_results.html', context)
 
 def get_type_and_id(request):
 	athlete = request.user.athleteprofile
@@ -117,7 +117,7 @@ def comment(request):
 		comment_info = get_type_and_id(request)
 		comment_info['content'] = request.POST['content']
 		comment = build_comment(comment_info)
-		return render(request, 'athletes/comment.html', { 'comment': comment })
+		return render(request, 'athletes/cc/comment.html', { 'comment': comment })
 	return HttpResponseForbidden()
 
 @group_required('athletes')
@@ -157,7 +157,7 @@ def get_gamestat(request):
 		if gamestat.clips.exists():
 			clip = gamestat.clips.first()
 
-		json['html'] = render_to_string('athletes/gamestat_modal.html', 
+		json['html'] = render_to_string('athletes/gamestat/gamestat_modal.html', 
 										RequestContext(request, { "stat":gamestat, "clip":clip }))
 		if clip:
 			json['dash_info'] = { "mpd_url":clip.get_gamefilm().mpd_url, 
@@ -197,7 +197,8 @@ def play_gamefilm(request):
 		film_id = request.GET["gamefilm-id"]
 		gamefilm = GameFilm.objects.get(pk=int(film_id))
 		gamefilm_clips = athlete.gamestat_set.get(game=gamefilm.game).clips.all()
-		return render(request, 'athletes/gamefilm_display_modal.html', {"gamefilm_clips":gamefilm_clips, "gamefilm": gamefilm })
+		return render(request, 'athletes/gamefilm/gamefilm_display_modal.html', 
+							   {"gamefilm_clips":gamefilm_clips, "gamefilm": gamefilm })
 
 @group_required('athletes')
 def watching(request):
@@ -227,7 +228,8 @@ def create_gamefilmclip(request):
 									game=gamefilm.game, 
 									gamestat=gamestat)
 
-		return render(request, 'athletes/gamefilm_clipbars.html', { "gamefilm_clips":gamestat.clips.all() })
+		return render(request, 'athletes/gamefilm/gamefilm_clipbars.html', 
+							   { "gamefilm_clips":gamestat.clips.all() })
 
 @csrf_exempt
 @group_required('athletes')
@@ -239,7 +241,8 @@ def update_gamefilm_clip(request):
 		game_clip.gamefilm_start_time = start_time
 		game_clip.gamefilm_end_time = end_time
 		game_clip.save()
-		return render(request, 'athletes/gamefilm_clipbars.html', { "gamefilm_clips":game_clip.gamefilm.clips })
+		return render(request, 'athletes/gamefilm/gamefilm_clipbars.html', 
+							   { "gamefilm_clips":game_clip.gamefilm.clips })
 	return HttpResponseForbidden()
 
 @csrf_exempt
@@ -252,22 +255,13 @@ def delete_gamefilm_clip(request):
 	return HttpResponseForbidden()
 
 
-# @group_required('athletes')
-# def get_dash_info(request):
-# 	if request.method == 'GET':
-# 		clip = get_object_or_404(GameFilmClip, pk=request.GET['clip_id'])
-# 		json = {}
-# 		json['dash_info'] = { "mpd_url":clip.gamefilm.mpd_url, "start_time":clip.gamefilm_start_time, "end_time":clip.gamefilm_end_time }
-# 		return JsonResponse(json)
-# 	return HttpResponseForbidden()
-
 @group_required('athletes')
 def show_game(request):
-	# import pdb; pdb.set_trace();
 	game = Game.objects.get(pk=int(request.GET['game_id']))
 	json = {}
 	json['dash_info'] = fetch_dash_game_highlights(game)
-	json['html'] = render_to_string('athletes/game_display_modal.html', RequestContext(request, { "game": game }))
+	json['html'] = render_to_string('athletes/game/game_display_modal.html', 
+									RequestContext(request, { "game": game }))
 	return JsonResponse(json)
 
 def fetch_dash_game_highlights(game):

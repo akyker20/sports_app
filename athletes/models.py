@@ -90,7 +90,7 @@ class GameFilm(models.Model):
 	mpd_url = models.CharField(max_length=128)
 
 	def __unicode__(self):
-		return "Game film of {} posted by {}".format(self.game, self.coach_uploaded_by)
+		return "Game film of {}".format(self.game)
 
 	def save(self, *args, **kwargs):
 		super(GameFilm, self).save(*args, **kwargs)
@@ -204,3 +204,6 @@ class Notification(PolymorphicModel):
 
 class GameFilmPostedNotification(Notification):
 	game_film = models.ForeignKey(GameFilm)
+
+	def __unicode__(self):
+		return "{} posted.".format(self.game_film)

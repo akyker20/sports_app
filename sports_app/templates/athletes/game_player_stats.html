@@ -1,0 +1,13 @@
+<ul>
+<h4>{{team_name}}</h4>
+{% for stat in stats.all %}
+    <li data-id="{{stat.id}}" class="player-stat-container {% if stat.game.gamefilm.clips %} gamestat-selectable {% endif %}">
+      <a href="{% url 'athlete_profile_with_id' stat.athlete.id %}">#{{stat.athlete.number}} {{stat.athlete}}</a>
+      {% if stat.game.gamefilm.clips %}
+        <font class="right glyphicon glyphicon-film view-gamestat" data-id="{{stat.id}}"></font>
+      {% endif %}
+      
+        {% include 'athletes/gamestat-progressbar.html' with reb=stat.rebounds blks=stat.blocks stls=stat.steals asts=stat.assists pts=stat.points %}
+    </li>
+{% endfor %}
+</ul>

@@ -139,7 +139,7 @@ section.player-info div.heading input {
 
 /* Start Game Modal Styling */
 
-div.player-stat-container {
+li.player-stat-container {
     padding: 10px;
     border-radius: 5px;
 }
@@ -547,6 +547,8 @@ div.game-gamestats-container {
     width: 350px; 
     display: inline-block; 
     vertical-align: top;
+    height: 370px;
+    overflow: auto;
 }
 
 ul.comments {

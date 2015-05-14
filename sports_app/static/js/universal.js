@@ -53,7 +53,7 @@ $(document).ready(function(){
 
 
   $('div.gamestat-block').click(gamestatClicked);
-  $('section.video-modal').on("click", "div.player-stat-container.gamestat-selectable", gamestatClicked);
+  $('section.video-modal').on("click", "ul li.player-stat-container.gamestat-selectable", gamestatClicked);
 
   function gamestatClicked() {
     var id = $(this).data('id');

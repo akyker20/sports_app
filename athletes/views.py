@@ -17,6 +17,7 @@ from django.db.models import Count, Sum
 from django.core.cache import cache
 from decimal import Decimal
 from operator import itemgetter
+import random
 
 def register(request):
 	form = AthleteCreationForm()
@@ -83,16 +84,19 @@ def profile(request, athlete_id=None):
 	if athlete_id is None or int(athlete_id) == current_athlete.id:
 		athlete = current_athlete
 		template = 'athletes/profile/user_profile.html'
+		suggestions = get_watch_suggestions(athlete)
 	else:
 		athlete = AthleteProfile.objects.get(pk=athlete_id)
 		template = 'athletes/profile/other_profile.html'
+		suggestions = None
 	watch_count = athlete.watched_by.count()
 	athlete_clips = athlete.clip_set
 	total_clip_views = athlete_clips.aggregate(views=Sum('view_count'))['views']
 	game_stats = athlete.gamestat_set.all()
 	watching_player = athlete in current_athlete.watching.all()
 	context = { 'athlete': athlete, 'clips': athlete_clips.all(), 'gamestats': game_stats,
-				'watch_count': watch_count, "total_clip_views": total_clip_views }
+				'watch_count': watch_count, "total_clip_views": total_clip_views,
+				'suggestions':suggestions }
 	return render(request, template, context)
 
 @group_required('athletes')
@@ -141,8 +145,6 @@ def top10(request):
 		top10_clips = [Clip.objects.get(id=tup[1]) for tup in weekly_clips_tuples[0:10]]
 		cache.set(cache_key, top10_clips, cache_time)
 	return render(request, 'athletes/top10.html', {"clips":top10_clips, "athlete": request.user.athleteprofile })
-
-
 
 
 def compute_popularity(clip):

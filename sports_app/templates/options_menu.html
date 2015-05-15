@@ -2,31 +2,51 @@
   <ul id="options-list">
     {% if user.athleteprofile %}
 
-      <li id="notifications">Notifications<span class="badge">{{user.athleteprofile.notifications.count}}</span></li>
+      <li class="option" id="notifications">Notifications<span class="badge">{{user.athleteprofile.notifications.count}}</span></li>
       <ul id="notification-list" style="display: none">
         {% for notification in user.athleteprofile.notifications.all %}
           <li data-gamefilm-id="{{notification.game_film.id}}">{{notification}}</li>
         {% endfor %}
       </ul>
 
-      <li><a href="{% url 'feed' %}">Feed</a></li>
-      <li><a href="{% url 'athlete_profile' %}">Profile</a></li>
-      <li><a href="{% url 'top10' %}">Top 10</a></li>
-      <li><a href="{% url 'watching' %}">Watching</a></li>
-      <li>Rankings</li>
-      <li>Games</li>
-      <li><a href="{% url 'team' user.athleteprofile.current_team.id %}">My Team</a></li>
-      
+      <li class="option"><a href="{% url 'feed' %}">Feed</a></li>
+      <li class="option"><a href="{% url 'athlete_profile' %}">Profile</a></li>
+      <li class="option"><a href="{% url 'top10' %}">Top 10</a></li>
+      <li class="option"><a href="{% url 'watching' %}">Watching</a></li>
+      <li class="option">Rankings</li>
+      <li class="option">Games</li>
+      <li class="option"><a href="{% url 'team' user.athleteprofile.current_team.id %}">My Team</a></li>
+
     {% endif %}
 
-
     {% if user.is_authenticated %}  
-      <li>
+      <li class="option">
         <form name="form" method="post" action="{% url 'logout' %}">
           {% csrf_token %}
           <a onclick="form.submit();">Logout</a>
         </form>
       </li>
+    {% endif %}
+
+    {% load athlete_watching %}
+
+    {% if user.athleteprofile %}
+      <div id="suggestions">
+        <h3>Suggestions</h3>
+        <ul>
+          {{ get_watch_suggestions|user.athleteprofile }}
+          {% for suggestion in None %}
+          <a href="{% url 'athlete_profile_with_id' suggestion.id %}">
+          <li>
+            <img src="{{STATIC_URL}}images/player.jpg" width="30px">
+            {{suggestion|truncatechars:18}}
+          </li> 
+          </a>  
+          {% endfor %}
+
+        </ul>
+      </div>
+
     {% endif %}
 
   </ul>

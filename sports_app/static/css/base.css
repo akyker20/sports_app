@@ -65,6 +65,30 @@ section div.content {
 /* End Team Page */
 
 
+/* Start Suggestions */
+div#suggestions {
+    padding: 8px;
+}
+
+div#suggestions h3 {
+    font-size: 16px;
+    font-weight: bold;
+}
+
+div#suggestions ul li {
+    padding: 5px;
+    cursor: pointer;
+    border-radius: 3px;
+}
+
+div#suggestions ul a {
+    color: black;
+    font
+}
+
+/* End Suggestions */
+
+
 /* Start Options Menu Styling */
 
 nav.options-menu {
@@ -79,7 +103,11 @@ nav.options-menu {
     left: 0px;
 }
 
-nav.options-menu ul#options-list li {
+nav.options-menu a:hover {
+    text-decoration: none;
+}
+
+nav.options-menu ul#options-list li.option {
     padding: 8px;
     font-size: 16px;
     font-weight: bold;

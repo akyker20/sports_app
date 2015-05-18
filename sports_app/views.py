@@ -11,7 +11,9 @@ from athletes.models import Team
 
 
 def home(request):
-  return render(request, 'home.html', {})
+	if request.user.is_authenticated() and request.user.athleteprofile:
+		return redirect('athlete_profile')
+	return render(request, 'home.html', {})
 
 
 # Create your views here.
@@ -36,4 +38,5 @@ def logout_user(request):
 
 def team(request, team_id):
 	team = Team.objects.get(id=int(team_id))
-	return render(request, 'team.html', { "team":team })
+	recent_games = team.get_games()
+	return render(request, 'team.html', { "team":team, "recent_games":recent_games })

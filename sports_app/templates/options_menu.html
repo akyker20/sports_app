@@ -29,13 +29,12 @@
     {% endif %}
 
     {% load athlete_watching %}
-
     {% if user.athleteprofile %}
       <div id="suggestions">
         <h3>Suggestions</h3>
         <ul>
-          {{ get_watch_suggestions|user.athleteprofile }}
-          {% for suggestion in None %}
+          {% get_watch_suggestions as suggestions %}
+          {% for suggestion in suggestions %}
           <a href="{% url 'athlete_profile_with_id' suggestion.id %}">
           <li>
             <img src="{{STATIC_URL}}images/player.jpg" width="30px">

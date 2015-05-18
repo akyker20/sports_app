@@ -84,19 +84,16 @@ def profile(request, athlete_id=None):
 	if athlete_id is None or int(athlete_id) == current_athlete.id:
 		athlete = current_athlete
 		template = 'athletes/profile/user_profile.html'
-		suggestions = get_watch_suggestions(athlete)
 	else:
 		athlete = AthleteProfile.objects.get(pk=athlete_id)
 		template = 'athletes/profile/other_profile.html'
-		suggestions = None
 	watch_count = athlete.watched_by.count()
 	athlete_clips = athlete.clip_set
 	total_clip_views = athlete_clips.aggregate(views=Sum('view_count'))['views']
 	game_stats = athlete.gamestat_set.all()
 	watching_player = athlete in current_athlete.watching.all()
 	context = { 'athlete': athlete, 'clips': athlete_clips.all(), 'gamestats': game_stats,
-				'watch_count': watch_count, "total_clip_views": total_clip_views,
-				'suggestions':suggestions }
+				'watch_count': watch_count, "total_clip_views": total_clip_views }
 	return render(request, template, context)
 
 @group_required('athletes')

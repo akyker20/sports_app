@@ -55,6 +55,22 @@ section div.content {
 /* End Universal Styling */
 
 
+/* Start Game block */
+
+div.game-block {
+    padding: 10px;
+    border: 5px solid white;
+    margin-top: 30px;
+}
+div.game-block div.team-info {
+    display: inline-block;
+    text-align: center;
+}
+
+
+/* End game block */
+
+
 /* Team Page */
 
 

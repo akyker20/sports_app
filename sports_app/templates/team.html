@@ -28,12 +28,30 @@
         {% for player in team.athletes.all %}
         <li style="margin-top: 20px">
           <h4>#{{player.number}} {{player}}</h4>
-          {% include 'athletes/gamestat-progressbar.html' with reb=player.avg_rebounds blks=player.avg_blocks stls=player.avg_steals asts=player.avg_assists pts=player.avg_points %}
+          {% include 'athletes/gamestat/gamestat-progressbar.html' with reb=player.avg_rebounds blks=player.avg_blocks stls=player.avg_steals asts=player.avg_assists pts=player.avg_points %}
         </li>
         {% endfor %}
       </ul>
     </div>
     <div class="games" style="display: none">
+      {% for game in recent_games %}
+        <div class="game-block">
+          <div class="team-info">
+            <h4>{{game.home_team}}</h4>
+            <img src="{{STATIC_URL}}images/parktudor.jpg" width="150px">
+            <h3>87</h3>
+          </div>
+          <div class="team-info">
+            <h4>{{game.away_team}}</h4>
+            <img src="{{STATIC_URL}}images/parktudor.jpg" width="150px">
+            <h3>75</h3>
+          </div>
+          <div class="leading-scorers">
+
+          </div>
+
+        </div>
+      {% endfor %}
     </div>
   </div>
 </section>

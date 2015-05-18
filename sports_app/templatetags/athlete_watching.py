@@ -1,7 +1,8 @@
 from django import template
 from django.template.loader import get_template
 from django.core.cache import cache
-from athlete.models import AthleteProfile
+from athletes.models import AthleteProfile
+from operator import itemgetter
 
 register = template.Library()
 
@@ -14,8 +15,10 @@ def athlete_watching(current_athlete, athlete):
 	return {"watching_player": is_watching,
 			"athlete_id": athlete.id }
 
-@register.filter
-def get_watch_suggestions(athlete):
+@register.assignment_tag(takes_context=True)
+def get_watch_suggestions(context):
+	user = context['user']
+	athlete = user.athleteprofile
 	cache_key = "{}WatchingSuggestions".format(athlete.athlete.username)
 	cache_time = 30
 	suggestions = cache.get(cache_key)

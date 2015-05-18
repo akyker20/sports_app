@@ -9,9 +9,7 @@
 			{% if object|get_class == 'GameStat' %}
 				{% include 'athletes/gamestat/gamestat.html' with stat=object athlete=athlete %}
 			{% else %}
-				<div class="feed-clip">
-					{% include 'athletes/cc/regular_cc.html' with clip=object %}
-				</div>
+
 			{% endif %}
 		{% endfor %}
     </div>

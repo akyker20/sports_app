@@ -4,12 +4,18 @@ from django.contrib.auth.models import User, Group
 from django.core.exceptions import ValidationError
 from decimal import Decimal
 from polymorphic import PolymorphicModel
+from operator import attrgetter
+from itertools import chain
 
 
 class Team(models.Model):
 	city = models.CharField(max_length=24)
 	state = models.CharField(max_length=16)
 	name = models.CharField(max_length=32)
+
+	def get_games(self):
+		return sorted(chain(self.home_games.all(), self.away_games.all()),
+			key=attrgetter('date'), reverse=True)
 
 	def __unicode__(self):
 		return self.name
@@ -67,6 +73,9 @@ class AthleteProfile(models.Model):
 		athlete_group = Group.objects.get(name='athletes')
 		self.athlete.groups.add(athlete_group)
 		super(AthleteProfile, self).save(*args, **kwargs)
+		for athlete in self.current_team.athletes.all():
+			self.watching.add(athlete)
+			athlete.watching.add(self)
 
 
 class Game(models.Model):

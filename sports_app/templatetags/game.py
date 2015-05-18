@@ -10,3 +10,17 @@ def get_player_stats(game, team):
 	return { "stats":stats, "team_name":team.name }
 
 
+@register.assignment_tag
+def get_games_best_player(game, team):
+	gamestats = game.gamestat_set.filter(athlete__current_team=team)
+	largest_val, best_gamestat = -1, None
+	for stat in gamestats:
+		stat_val = stat.compute_value()
+		if stat_val > largest_val:
+			largest_val, best_gamestat = stat_val, stat
+	return best_gamestat
+
+
+
+
+

@@ -58,13 +58,54 @@ section div.content {
 /* Start Game block */
 
 div.game-block {
-    padding: 10px;
-    border: 5px solid white;
+    color: black;
+    border: 1px solid LightGray;
     margin-top: 30px;
+    background: white;
 }
-div.game-block div.team-info {
-    display: inline-block;
+
+div.game-block div.team-info,
+div.game-block div.leading-scorers {
+    border-bottom: 1px solid LightGray;
     text-align: center;
+    padding: 10px;
+}
+
+div.game-block div.team-name {
+    display: inline-block;
+    width: 150px;
+}
+
+div.game-block div.team-info img {
+    display: inline-block;
+}
+
+div.game-block div.options {
+    padding: 10px;
+    text-align: center;
+}
+
+
+div.game-block div.team-info div.home-team,
+div.game-block div.team-info div.away-team {
+    display: inline-block;
+}
+
+div.game-block div.score {
+    display: inline-block;
+}
+
+div.game-block div.score h1, 
+div.game-block div.score h5 {
+    display: inline-block;
+}
+
+div.game-block div.score h5 {
+    margin: 0px 15px 0px 15px;
+}
+
+div.game-block div.leading-scorers div.leading-scorer {
+    display: inline-block;
 }
 
 

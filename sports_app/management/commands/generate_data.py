@@ -42,7 +42,16 @@ class Command(BaseCommand):
 			for team2 in Team.objects.all():
 				if team != team2:
 					print "generated game between {} and {}...".format(team.name, team2.name)
-					game = Game.objects.create(home_team=team, away_team=team2, date=date.today())
+					home_team_score = randint(50, 100)
+					away_team_score = randint(50, 100)
+					while away_team_score == home_team_score:
+						away_team_score = randint(50, 100)
+
+					game = Game.objects.create(home_team=team, 
+											   home_team_score=home_team_score, 
+											   away_team=team2, 
+											   away_team_score=away_team_score, 
+											   date=date.today())
 					GameFilm.objects.create(game=game,
 											coach_uploaded_by=team.coach, 
 											duration=37, 

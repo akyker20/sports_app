@@ -33,21 +33,58 @@
         {% endfor %}
       </ul>
     </div>
+
     <div class="games" style="display: none">
       {% for game in recent_games %}
         <div class="game-block">
           <div class="team-info">
-            <h4>{{game.home_team}}</h4>
-            <img src="{{STATIC_URL}}images/parktudor.jpg" width="150px">
-            <h3>87</h3>
+            <div class="home-team">
+              <div class="team-name">
+                <h4>{{game.home_team}}</h4>
+              </div>
+            </div>
+            <img src="{{STATIC_URL}}images/parktudor.jpg" width="100px">
+            <div class="score">
+              {% if game.home_team_score > game.away_team_score %}
+              <h1>{{game.home_team_score}}</h1>
+              <h3 class="glyphicon glyphicon-triangle-left"></h3>
+              <h5>Final</h5>
+              <h3 style="color: white" class="glyphicon glyphicon-triangle-right"></h3>
+              <h1 class="weak">{{game.away_team_score}}</h1>
+              {% else %}
+              <h1 class="weak">{{game.home_team_score}}</h1>
+              <h3 style="color: white" class="glyphicon glyphicon-triangle-left"></h3>
+              <h5>Final</h5>
+              <h3 class="glyphicon glyphicon-triangle-right"></h3>
+              <h1>{{game.away_team_score}}</h1>
+              {% endif %}
+            </div>
+            <img src="{{STATIC_URL}}images/parktudor.jpg" width="100px">
+            <div class="away-team">
+              <div class="team-name">
+                <h4>{{game.away_team}}</h4>
+              </div>
+            </div>
           </div>
-          <div class="team-info">
-            <h4>{{game.away_team}}</h4>
-            <img src="{{STATIC_URL}}images/parktudor.jpg" width="150px">
-            <h3>75</h3>
-          </div>
-          <div class="leading-scorers">
 
+          {% load game %}
+          <div class="leading-scorers">
+            {% get_games_best_player game game.home_team as home_stat %}
+            {% get_games_best_player game game.away_team as away_stat %}
+            <div class="leading-player">
+              <img src="{{STATIC_URL}}images/player.jpg" width="150px">
+              <h3>{{home_stat.athlete}}</h3>
+                {% include 'athletes/gamestat/gamestat-progressbar.html' with reb=home_stat.rebounds blks=home_stat.blocks stls=home_stat.steals asts=home_stat.assists pts=home_stat.points %}
+            </div>
+            <div class="leading-player">
+              {% include 'athletes/gamestat/gamestat-progressbar.html' with reb=away_stat.rebounds blks=away_stat.blocks stls=away_stat.steals asts=away_stat.assists pts=away_stat.points %}
+              <h3>{{away_stat.athlete}}</h3>
+              <img src="{{STATIC_URL}}images/player.jpg" width="150px">
+            </div>
+
+          </div>
+          <div class="options">
+            <a href="#">View Game</a>
           </div>
 
         </div>

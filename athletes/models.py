@@ -81,6 +81,8 @@ class AthleteProfile(models.Model):
 class Game(models.Model):
 	home_team = models.ForeignKey(Team, related_name="home_games")
 	away_team = models.ForeignKey(Team, related_name="away_games")
+	home_team_score = models.IntegerField(default=0)
+	away_team_score = models.IntegerField(default=0)
 	date = models.DateField()
 
 	def __unicode__(self):
@@ -123,6 +125,9 @@ class GameStat(models.Model):
 
 	def __unicode__(self):
 		return "{}'s stats ({})".format(self.athlete, self.game)
+
+	def compute_value(self):
+		return self.points + self.rebounds + self.assists + self.blocks + self.steals
 
 	def save(self, *args, **kwargs):
 		if self.athlete.current_team != self.game.home_team and self.athlete.current_team != self.game.away_team:

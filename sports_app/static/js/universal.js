@@ -8,8 +8,6 @@ $(document).ready(function(){
   var playable_clips = [];
   var current_clip_index = 0;
 
-  var athlete_watching = [];
-
   function Clip(start, end) {
     this.start_time = start;
     this.end_time = end;
@@ -39,8 +37,6 @@ $(document).ready(function(){
 
   $('section.video-modal').on("click", "button#game-comments", showGameComments);
   $('section.video-modal').on("click", "button#game-gamestats", showGameGamestats);
-
-  // $('section.video-modal').on("keydown", "gamefilm-tag-container")
 
   
   function showGameComments() {
@@ -252,11 +248,10 @@ $(document).ready(function(){
       url: "/athletes/play_gamefilm",
       type: "GET",
       data: data
-    }).success(function(json){
+    }).success(function(html){
       resetPlayableClips();
       addBackgroundOpacity();
-      athlete_watching = json['watching'];
-      $('section.video-modal').html(json['html']);
+      $('section.video-modal').html(html);
       current_mpd_url = $('div.video-modal').data('mpd-url');
       playDashContent();
       $('div.video-modal video')[0].autoplay = true;

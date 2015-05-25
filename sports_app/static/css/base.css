@@ -15,6 +15,7 @@
 
 .fix-display {
     display: inline-block;
+    vertical-align: top;
 }
 
 .left {
@@ -450,10 +451,23 @@ div.gamefilm-tag-container {
     top: 100px;
 }
 
+div.gamefilm-tag-container ul {
+    background: white; 
+    color: black; 
+    max-height: 157px; 
+    overflow-y: scroll; 
+}
+
+div.gamefilm-tag-container ul li {
+    padding: 5px;
+}
+
 div.tag-container {
     display: inline-block;
     margin-left: 20px;
 }
+
+
 
 
 span.glyphicon.add-clip,

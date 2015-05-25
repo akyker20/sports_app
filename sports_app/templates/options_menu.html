@@ -12,13 +12,13 @@
         {% endfor %}
       </ul>
 
-      <li class="option strong"><a href="{% url 'feed' %}">Feed</a></li>
-      <li class="option strong"><a href="{% url 'athlete_profile' %}">Profile</a></li>
-      <li class="option strong"><a href="{% url 'top10' %}">Top 10</a></li>
-      <li class="option strong"><a href="{% url 'watching' %}">Watching</a></li>
+      <a href="{% url 'feed' %}"><li class="option strong">Feed</li></a>
+      <a href="{% url 'athlete_profile' %}"><li class="option strong">Profile</li></a>
+      <a href="{% url 'top10' %}"><li class="option strong">Top 10</li></a>
+      <a href="{% url 'watching' %}"><li class="option strong">Watching</li></a>
       <li class="option strong">Rankings</li>
       <li class="option strong">Games</li>
-      <li class="option strong"><a href="{% url 'team' user.athleteprofile.current_team.id %}">My Team</a></li>
+      <a href="{% url 'team' user.athleteprofile.current_team.id %}"><li class="option strong">My Team</li></a>
 
     {% endif %}
 

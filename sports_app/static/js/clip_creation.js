@@ -15,11 +15,40 @@ $(document).ready(function(){
 	$('section.video-modal').on("click", 'div.clip-bar', handle_clip_bar_click);
 	$('section.video-modal').on("click", 'div.create-clip', start_clip_creation);
 	$('section.video-modal').on("click", 'div.cancel-clip-creation', end_clip_creation);
-	$('section.video-modal').on("click", 'div.save-clip-creation', save_clip);
+	$('section.video-modal').on("click", 'div.save-clip-creation', begin_tag_process);
 	$('section.video-modal').on("click", 'div.delete-clip', delete_clip);
 	$('section.video-modal').on("click", 'div.edit-clip', edit_clip);
 	$('section.video-modal').on("click", 'div.save-clip-edit', save_clip_edit);
 	$('section.video-modal').on("click", 'div.revert-clip', revert_clip);
+	$('section.video-modal').on("keyup", "div.gamefilm-tag-container input", searchTaggablePlayers);
+	$('section.video-modal').on("click", "div.gamefilm-tag-container img", save_clip);
+	$('section.video-modal').on("click", "div.gamefilm-tag-container ul li", save_clip);
+
+
+
+	function searchTaggablePlayers(){
+	    
+	    var inputVal = $(this).val().toLowerCase();
+	    if(inputVal) {
+	      $('div.gamefilm-tag-container li').each(function( index ){
+	        var playerName = $(this).text().toLowerCase();
+	        if(!$(this).is(":visible") && playerName.indexOf(inputVal) > -1) {
+	          $(this).show();
+	        }
+	        else if($(this).is(":visible") && playerName.indexOf(inputVal) === -1) {
+	          $(this).hide();
+	        }
+	      });
+
+	      if($('div.gamefilm-tag-container img').is(':visible')) {
+	        $('div.gamefilm-tag-container img').addClass('weak');
+	      }
+
+	    } else {
+	      $('div.gamefilm-tag-container li:visible').hide(); 
+	      $('div.gamefilm-tag-container img').removeClass('weak');
+	    }
+	}
 
 
 	function edit_clip() {
@@ -49,6 +78,23 @@ $(document).ready(function(){
 		hide_all_options();
 		$('div.create-clip').fadeIn();
 		$('div.clip-bar:hidden').fadeIn();
+	}
+
+
+	function begin_tag_process() {
+		if(clip_creation_in_progress){
+			video.pause();
+			clip_end_time = video.currentTime;
+			var duration = clip_end_time - clip_start_time;
+			
+			if(duration < 3) {
+				alert("Clips must be at least 3 seconds in duration");
+			} else if (duration > 30) {
+				alert("Clips must be less than 30 seconds in duration.");
+			} else {
+				$('div.gamefilm-tag-container').fadeIn();
+			}
+		}
 	}
 
 
@@ -119,32 +165,25 @@ $(document).ready(function(){
 	//an ajax request is sent to the server to create a new GameFilmClip model with
 	//the appropriate start and end times.
 	function save_clip() {
-		if(clip_creation_in_progress){
-			video.pause();
-			clip_end_time = video.currentTime;
-			var duration = clip_end_time - clip_start_time;
+		var athleteID = $(this).data('athlete-id');
+		var gamefilm_id = video_modal.data('gamefilm-id');
+
+		$.ajax({
+			url: "/athletes/create_gamefilmclip",
+			type: "POST",
+			data: {"gamefilm_id": gamefilm_id, "start_time": clip_start_time, "end_time": clip_end_time,
+				  "athlete_id": athleteID }
+		}).success(function(html) {
+			$('div.clip_bar').remove();
+			video_modal.prepend(html);
+			end_clip_creation();
+			$('div.gamefilm-tag-container').fadeOut();
+			$('div.gamefilm-tag-container img').removeClass('weak');
+			$('div.gamefilm-tag-container input').text("");
+			$('div.gamefilm-tag-container ul li').hide();
+		});
 			
-			if(duration < 3) {
-				alert("Clips must be at least 3 seconds in duration");
-			} else if (duration > 30) {
-				alert("Clips must be less than 30 seconds in duration.");
-			} else {
-
-				$("div.gamefilm-tag-container").fadeIn();
-
-				// var gamefilm_id = video_modal.data('gamefilm-id');
-
-				// $.ajax({
-				// 	url: "/athletes/create_gamefilmclip",
-				// 	type: "POST",
-				// 	data: {"gamefilm_id": gamefilm_id, "start_time": clip_start_time, "end_time": clip_end_time }
-				// }).success(function(html) {
-				// 	$('div.clip_bar').remove();
-				// 	video_modal.prepend(html);
-				// 	end_clip_creation();
-				// });
-			}
-		}
+		
 	}
 
 

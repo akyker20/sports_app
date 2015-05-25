@@ -212,7 +212,6 @@ class GameStatStar(Star):
 
 
 class Notification(PolymorphicModel):
-	read = models.BooleanField(default=False)
 	created_at = models.DateTimeField(auto_now_add=True)
 	athlete = models.ForeignKey(AthleteProfile, related_name="notifications")
 

@@ -35,8 +35,12 @@ def logout_user(request):
   logout(request)
   return redirect('home')
 
-
+@login_required
 def team(request, team_id):
 	team = Team.objects.get(id=int(team_id))
 	recent_games = team.get_games()
-	return render(request, 'team.html', { "team":team, "recent_games":recent_games })
+	context = { "team":team, "recent_games":recent_games }
+	if hasattr(request.user, 'athleteprofile'):
+		context["athlete"] = request.user.athleteprofile
+
+	return render(request, 'team.html', context)

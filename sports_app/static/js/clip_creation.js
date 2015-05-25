@@ -122,7 +122,6 @@ $(document).ready(function(){
 		if(clip_creation_in_progress){
 			video.pause();
 			clip_end_time = video.currentTime;
-			var gamefilm_id = video_modal.data('gamefilm-id');
 			var duration = clip_end_time - clip_start_time;
 			
 			if(duration < 3) {
@@ -130,15 +129,20 @@ $(document).ready(function(){
 			} else if (duration > 30) {
 				alert("Clips must be less than 30 seconds in duration.");
 			} else {
-				$.ajax({
-					url: "/athletes/create_gamefilmclip",
-					type: "POST",
-					data: {"gamefilm_id": gamefilm_id, "start_time": clip_start_time, "end_time": clip_end_time }
-				}).success(function(html) {
-					$('div.clip_bar').remove();
-					video_modal.prepend(html);
-					end_clip_creation();
-				});
+
+				$("div.gamefilm-tag-container").fadeIn();
+
+				// var gamefilm_id = video_modal.data('gamefilm-id');
+
+				// $.ajax({
+				// 	url: "/athletes/create_gamefilmclip",
+				// 	type: "POST",
+				// 	data: {"gamefilm_id": gamefilm_id, "start_time": clip_start_time, "end_time": clip_end_time }
+				// }).success(function(html) {
+				// 	$('div.clip_bar').remove();
+				// 	video_modal.prepend(html);
+				// 	end_clip_creation();
+				// });
 			}
 		}
 	}
@@ -190,4 +194,5 @@ $(document).ready(function(){
 		hide_all_options();
 		$('div.create-clip').fadeIn();
 	}
+
 });

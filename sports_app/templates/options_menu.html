@@ -7,7 +7,8 @@
       </li>
       <ul id="notification-list" style="display: none">
         {% for notification in user.athleteprofile.notifications.all %}
-          <li data-gamefilm-id="{{notification.game_film.id}}">{{notification}}</li>
+          <li data-gamefilm-id="{{notification.game_film.id}}"
+              data-notification-id="{{notification.id}}">{{notification}}</li>
         {% endfor %}
       </ul>
 

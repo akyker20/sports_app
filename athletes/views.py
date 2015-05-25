@@ -196,8 +196,18 @@ def play_gamefilm(request):
 		film_id = request.GET["gamefilm-id"]
 		gamefilm = GameFilm.objects.get(pk=int(film_id))
 		gamefilm_clips = athlete.gamestat_set.get(game=gamefilm.game).clips.all()
-		return render(request, 'athletes/gamefilm/gamefilm_display_modal.html', 
-							   {"gamefilm_clips":gamefilm_clips, "gamefilm": gamefilm })
+		if "notification-id" in request.GET:
+			notification = GameFilmPostedNotification.objects.get(id=request.GET["notification-id"])
+			notification.delete()
+
+		json = {}
+		json['html'] = render_to_string('athletes/gamefilm/gamefilm_display_modal.html', 
+									RequestContext(request, 
+										{"gamefilm_clips":gamefilm_clips, "gamefilm": gamefilm }))
+
+		json['watching'] = map(lambda x: (x.__unicode__(), x.id), athlete.watching.all())
+
+		return JsonResponse(json)
 
 @group_required('athletes')
 def watching(request):
@@ -215,7 +225,6 @@ def create_gamefilmclip(request):
 		start_time = Decimal(request.POST['start_time'])
 		end_time = Decimal(request.POST['end_time'])
 
-		import pdb; pdb.set_trace();
 		if not athlete.gamestat_set.filter(game=gamefilm.game).exists():
 			gamestat = athlete.gamestat_set.create(game=gamefilm.game)
 		else:

@@ -132,6 +132,11 @@ div.game-block div.leading-scorers div.leading-scorer {
 
 /* Team Page */
 
+section.team-heading div.team-options {
+    width: 60%;
+    margin-left: 20px;
+    display: inline-block;
+}
 
 
 
@@ -434,6 +439,21 @@ ul.athlete-listing li img {
 
 
 /* End Watching Page */
+
+
+/* Gamefilm */
+
+div.gamefilm-tag-container {
+    z-index: 200; 
+    position: fixed;
+    left: 600px;
+    top: 100px;
+}
+
+div.tag-container {
+    display: inline-block;
+    margin-left: 20px;
+}
 
 
 span.glyphicon.add-clip,

@@ -8,6 +8,8 @@ $(document).ready(function(){
   var playable_clips = [];
   var current_clip_index = 0;
 
+  var athlete_watching = [];
+
   function Clip(start, end) {
     this.start_time = start;
     this.end_time = end;
@@ -37,6 +39,8 @@ $(document).ready(function(){
 
   $('section.video-modal').on("click", "button#game-comments", showGameComments);
   $('section.video-modal').on("click", "button#game-gamestats", showGameGamestats);
+
+  // $('section.video-modal').on("keydown", "gamefilm-tag-container")
 
   
   function showGameComments() {
@@ -230,19 +234,34 @@ $(document).ready(function(){
 	});
 
 	$('ul#notification-list li').click(function(){
-		var gamefilm_id = $(this).data('gamefilm-id');
-		$.ajax({
-			url: "/athletes/play_gamefilm",
-			type: "GET",
-			data: {"gamefilm-id": gamefilm_id}
-		}).success(function(html){
-      resetPlayableClips();
-			$('section.video-modal').html(html);
-			current_mpd_url = $('div.video-modal').data('mpd-url');
-			playDashContent();
-			$('div.video-modal video')[0].autoplay = true;
-		});
+    var notification = $(this);
+		var gamefilm_id = notification.data('gamefilm-id');
+    var notification_id = notification.data('notification-id');
+    loadGamefilmModal({"gamefilm-id": gamefilm_id, "notification-id": notification_id });
+    notification.fadeOut();
 	});
+
+  $("a.view-gamefilm").click(function(){
+    var gamefilm_id = $(this).data('gamefilm-id');
+    loadGamefilmModal({"gamefilm-id": gamefilm_id});
+  });
+
+
+  function loadGamefilmModal(data) {
+    $.ajax({
+      url: "/athletes/play_gamefilm",
+      type: "GET",
+      data: data
+    }).success(function(json){
+      resetPlayableClips();
+      addBackgroundOpacity();
+      athlete_watching = json['watching'];
+      $('section.video-modal').html(json['html']);
+      current_mpd_url = $('div.video-modal').data('mpd-url');
+      playDashContent();
+      $('div.video-modal video')[0].autoplay = true;
+    });
+  }
 
   function resetPlayableClips() {
     current_clip_index = 0;
@@ -356,8 +375,8 @@ $(document).ready(function(){
 
   // TEAM JS
 
-  $('section.team-options ul.nav li').click(function(){
-    var previouslyActiveLI = $('section.team-options ul.nav li.active');
+  $('section.team-heading div.team-options ul.nav li').click(function(){
+    var previouslyActiveLI = $('section.team-heading div.team-options ul.nav li.active');
     var clickedLI = $(this);
 
     if(!clickedLI.hasClass("active")) {

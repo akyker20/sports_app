@@ -2,31 +2,35 @@
   <ul id="options-list">
     {% if user.athleteprofile %}
 
-      <li class="option" id="notifications">Notifications<span class="badge">{{user.athleteprofile.notifications.count}}</span></li>
+      <li class="option strong" id="notifications">
+        Notifications<span class="badge">{{user.athleteprofile.notifications.count}}</span>
+      </li>
       <ul id="notification-list" style="display: none">
         {% for notification in user.athleteprofile.notifications.all %}
           <li data-gamefilm-id="{{notification.game_film.id}}">{{notification}}</li>
         {% endfor %}
       </ul>
 
-      <li class="option"><a href="{% url 'feed' %}">Feed</a></li>
-      <li class="option"><a href="{% url 'athlete_profile' %}">Profile</a></li>
-      <li class="option"><a href="{% url 'top10' %}">Top 10</a></li>
-      <li class="option"><a href="{% url 'watching' %}">Watching</a></li>
-      <li class="option">Rankings</li>
-      <li class="option">Games</li>
-      <li class="option"><a href="{% url 'team' user.athleteprofile.current_team.id %}">My Team</a></li>
+      <li class="option strong"><a href="{% url 'feed' %}">Feed</a></li>
+      <li class="option strong"><a href="{% url 'athlete_profile' %}">Profile</a></li>
+      <li class="option strong"><a href="{% url 'top10' %}">Top 10</a></li>
+      <li class="option strong"><a href="{% url 'watching' %}">Watching</a></li>
+      <li class="option strong">Rankings</li>
+      <li class="option strong">Games</li>
+      <li class="option strong"><a href="{% url 'team' user.athleteprofile.current_team.id %}">My Team</a></li>
 
     {% endif %}
 
     {% if user.is_authenticated %}  
-      <li class="option">
+      <li class="option strong">
         <form name="form" method="post" action="{% url 'logout' %}">
           {% csrf_token %}
           <a onclick="form.submit();">Logout</a>
         </form>
       </li>
     {% endif %}
+
+  </ul>
 
     {% load athlete_watching %}
     {% if user.athleteprofile %}
@@ -36,9 +40,9 @@
           {% get_watch_suggestions as suggestions %}
           {% for suggestion in suggestions %}
           <a href="{% url 'athlete_profile_with_id' suggestion.id %}">
-          <li>
+          <li class="option">
             <img src="{{STATIC_URL}}images/player.jpg" width="30px">
-            {{suggestion|truncatechars:18}}
+            {{suggestion|truncatechars:16}}
           </li> 
           </a>  
           {% endfor %}
@@ -47,6 +51,4 @@
       </div>
 
     {% endif %}
-
-  </ul>
 </nav>

@@ -71,20 +71,23 @@
           <div class="leading-scorers">
             {% get_games_best_player game game.home_team as home_stat %}
             {% get_games_best_player game game.away_team as away_stat %}
-            <div class="leading-player">
-              <img src="{{STATIC_URL}}images/player.jpg" width="150px">
-              <h3>{{home_stat.athlete}}</h3>
-                {% include 'athletes/gamestat/gamestat-progressbar.html' with reb=home_stat.rebounds blks=home_stat.blocks stls=home_stat.steals asts=home_stat.assists pts=home_stat.points %}
+            <div class="leading-player-container">
+              <div class="leading-player">
+                <img src="{{STATIC_URL}}images/player.jpg" width="100px">
+                <h5>{{home_stat.athlete}}</h5>
+                  {% include 'athletes/gamestat/gamestat-progressbar.html' with reb=home_stat.rebounds blks=home_stat.blocks stls=home_stat.steals asts=home_stat.assists pts=home_stat.points %}
+              </div>
             </div>
-            <div class="leading-player">
-              {% include 'athletes/gamestat/gamestat-progressbar.html' with reb=away_stat.rebounds blks=away_stat.blocks stls=away_stat.steals asts=away_stat.assists pts=away_stat.points %}
-              <h3>{{away_stat.athlete}}</h3>
-              <img src="{{STATIC_URL}}images/player.jpg" width="150px">
+            <div class="leading-player-container">
+              <div class="leading-player">
+                <img src="{{STATIC_URL}}images/player.jpg" width="100px">
+                <h5>{{away_stat.athlete}}</h5>
+                  {% include 'athletes/gamestat/gamestat-progressbar.html' with reb=away_stat.rebounds blks=away_stat.blocks stls=away_stat.steals asts=away_stat.assists pts=away_stat.points %}
+              </div>
             </div>
-
           </div>
           <div class="options">
-            <a href="#">View Game</a>
+            <a data-game-id="{{game.id}}" class="view-game">View Game Highlights</a>
           </div>
 
         </div>

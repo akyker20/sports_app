@@ -88,6 +88,7 @@ $(document).ready(function(){
 	$('button.star').click(star);
 
   $('section.video-modal').on("click", "button#gamestat-view-game", displayGameModal);
+  $("a.view-game").click(displayGameModal);
 
 
   $('section.top10 ul li img.img-selectable').click(playRegularVideo);

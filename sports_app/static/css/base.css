@@ -38,6 +38,10 @@ body {
     opacity: 0.4;
 }
 
+.strong {
+    font-weight: bold;
+}
+
 img:hover, 
 .glyphicon:hover {
     cursor: pointer;
@@ -64,11 +68,25 @@ div.game-block {
     background: white;
 }
 
+div.leading-player-container {
+    width: calc(50% - 2px);
+    text-align: center;
+    display: inline-block;
+}
+
+div.game-block div.leading-player {
+    width: 350px;
+    margin: 0px auto;
+    padding: 20px;
+}
+
 div.game-block div.team-info,
 div.game-block div.leading-scorers {
     border-bottom: 1px solid LightGray;
-    text-align: center;
+}
+div.game-block div.team-info {
     padding: 10px;
+    text-align: center;
 }
 
 div.game-block div.team-name {
@@ -124,23 +142,17 @@ div.game-block div.leading-scorers div.leading-scorer {
 
 /* Start Suggestions */
 div#suggestions {
-    padding: 8px;
+    padding: 5px;
 }
 
 div#suggestions h3 {
-    font-size: 16px;
+    margin-top: 5px;
+    font-size: 15px;
     font-weight: bold;
-}
-
-div#suggestions ul li {
-    padding: 5px;
-    cursor: pointer;
-    border-radius: 3px;
 }
 
 div#suggestions ul a {
     color: black;
-    font
 }
 
 /* End Suggestions */
@@ -158,21 +170,21 @@ nav.options-menu {
     padding: 10px;
     top: 0px;
     left: 0px;
+    box-shadow: 4px 0px 25px black
 }
 
 nav.options-menu a:hover {
     text-decoration: none;
 }
 
-nav.options-menu ul#options-list li.option {
-    padding: 8px;
-    font-size: 16px;
-    font-weight: bold;
+li.option {
+    padding: 5px;
+    font-size: 15px;
     cursor: pointer;
     border-radius: 5px;
 }
 
-nav.options-menu ul#options-list li:hover {
+li.option:hover {
     background: #EDF7F7;
 }
 
@@ -483,6 +495,7 @@ div.video-modal {
     color: black;
     position: fixed;
     z-index: 100;
+    box-shadow: 5px 10px 40px black;
 }
 
 h5.no-content-uploaded {

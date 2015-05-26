@@ -9,9 +9,9 @@ urlpatterns = patterns('',
     url(r'^admin/', include(admin.site.urls)),
     url(r'^athletes/', include('athletes.urls')),
     url(r'^coaches/', include('coaches.urls')),
+    url(r'^teams/', include('teams.urls')),
     url(r'^$', 'sports_app.views.home', name='home'),
     url(r'^logout$', 'sports_app.views.logout_user', name='logout'),
     url(r'^login$', 'sports_app.views.login_user', name='login'),
-    url(r'^team/(?P<team_id>\d+)$', 'sports_app.views.team', name='team')
 
 )

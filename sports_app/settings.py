@@ -39,6 +39,7 @@ INSTALLED_APPS = (
     'sports_app',
     'athletes',
     'coaches',
+    'teams',
     'djangobower',
     'polymorphic',
 )

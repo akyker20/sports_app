@@ -1,9 +1,8 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect, render_to_response, get_object_or_404
 from sports_app.forms import AuthenticateForm, AthleteCreationForm
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import login, authenticate, logout
 from django.http import HttpResponse, HttpResponseForbidden, JsonResponse
-from django.shortcuts import render, redirect, render_to_response, get_object_or_404
 from django.template.loader import render_to_string
 from django.template import RequestContext
 from datetime import date
@@ -53,30 +52,34 @@ def feed(request):
 			clips = clips[1:]
 	return render(request, 'athletes/feed.html', {"feed_objects": feed_objects, "athlete": athlete })
 
-
 @csrf_exempt
 @login_required
 def watch_player(request, athlete_id=None):
-	if request.is_ajax() and request.method =='POST':
-		athlete = request.user.athleteprofile
-		if athlete_id is not None and athlete_id != athlete.id:
-			athlete_to_watch = AthleteProfile.objects.get(id=athlete_id)
-			if not athlete_to_watch in athlete.watching.all():
-				athlete.watching.add(athlete_to_watch)
-			return render(request, 'athletes/watching.html', { 'watching_player': True, 'athlete_id': athlete_id })
-	return HttpResponseForbidden()
+	currently_watching = False
+	return toggleWatch(request, currently_watching, athlete_id)
 
 @csrf_exempt
 @login_required
 def unwatch_player(request, athlete_id=None):
+	currently_watching = True
+	return toggleWatch(request, currently_watching, athlete_id)
+
+def toggleWatch(request, currently_watching, athlete_id=None):
 	if request.is_ajax() and request.method =='POST':
 		athlete = request.user.athleteprofile
 		if athlete_id is not None and athlete_id != athlete.id:
-			athete_watching = AthleteProfile.objects.get(id=athlete_id)
-			if athete_watching in athlete.watching.all():
-				athlete.watching.remove(athete_watching)
-			return render(request, 'athletes/watching.html', { 'watching_player': False, 'athlete_id': athlete_id })
+			athlete_of_interest = AthleteProfile.objects.get(id=athlete_id)
+			if currently_watching:
+				athlete.watching.remove(athlete_of_interest)
+			else:
+				athlete.watching.add(athlete_of_interest)
+
+			context = { 'watching_player': not currently_watching, 'athlete_id': athlete_id }
+			return render(request, 'athletes/watching.html', context)
+	
 	return HttpResponseForbidden()
+
+
 
 @group_required('athletes')
 def profile(request, athlete_id=None):

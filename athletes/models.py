@@ -6,33 +6,8 @@ from decimal import Decimal
 from polymorphic import PolymorphicModel
 from operator import attrgetter
 from itertools import chain
-
-
-class Team(models.Model):
-	city = models.CharField(max_length=24)
-	state = models.CharField(max_length=16)
-	name = models.CharField(max_length=32)
-
-	def get_games(self):
-		return sorted(chain(self.home_games.all(), self.away_games.all()),
-			key=attrgetter('date'), reverse=True)
-
-	def __unicode__(self):
-		return self.name
-
-class CoachProfile(models.Model):
-	coach = models.OneToOneField(User)
-	date_of_birth = models.DateField()
-	current_team = models.OneToOneField(Team, related_name='coach')
-
-	def __unicode__(self):
-		return self.coach.get_full_name()
-
-	def save(self, *args, **kwargs):
-		""" Before saving add coaches group to user object """
-		coaches_group = Group.objects.get(name='coaches')
-		self.coach.groups.add(coaches_group)
-		super(CoachProfile, self).save(*args, **kwargs)
+from teams.models import Team
+from coaches.models import CoachProfile
 
 class AthleteProfile(models.Model):
 	athlete = models.OneToOneField(User)

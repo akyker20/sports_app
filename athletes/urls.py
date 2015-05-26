@@ -1,10 +1,10 @@
 from django.conf.urls import patterns, include, url
 
 urlpatterns = patterns('',    
-    url(r'^profile$', 'athletes.views.profile', name='athlete_profile'),
+    url(r'^$', 'athletes.views.profile', name='athlete_profile'),
     url(r'^register$', 'athletes.views.register', name='athlete_register'),
     url(r'^play_clip$', 'athletes.views.play_clip'),
-    url(r'^profile/(?P<athlete_id>\d+)$', 'athletes.views.profile', name='athlete_profile_with_id'),
+    url(r'^(?P<athlete_id>\d+)$', 'athletes.views.profile', name='athlete_profile_with_id'),
     url(r'^search', 'athletes.views.search'),
     url(r'^watch_player/(?P<athlete_id>\d+)$', 'athletes.views.watch_player', name='watch_player'),
     url(r'^unwatch_player/(?P<athlete_id>\d+)$', 'athletes.views.unwatch_player', name='unwatch_player'),

@@ -28,7 +28,7 @@
     <div class="info">
       <img class="prof-pic thumbnail" src="{{STATIC_URL}}images/player.jpg" height="175">
       <div class="highschool">
-        <h5 style="margin-top: 0px">{{athlete.current_team.name}}</h5>
+        <h5 style="margin-top: 0px"><a href="{% url 'team' athlete.current_team.id %}">{{athlete.current_team.name}}</a></h5>
         <h5>{{athlete.current_team.city}}, {{athlete.current_team.state}}</h5>
         <img class="thumbnail" src="{{STATIC_URL}}images/parktudor.jpg" height="125">
       </div>

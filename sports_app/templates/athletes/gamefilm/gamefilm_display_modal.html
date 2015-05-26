@@ -40,7 +40,7 @@
     <div>
       <input type="text" class="form-control" placeholder="enter player">
       <ul>
-        {% for athlete in athlete.watching.all %}
+        {% for athlete in athlete.get_teammates %}
           <li data-athlete-id="{{athlete.id}}" style="display: none" class="option">{{athlete}}</li>
           {% endfor %}
       </ul>

@@ -44,6 +44,9 @@ class AthleteProfile(models.Model):
 		self.avg_points = Decimal(averages['points'])
 		self.save()
 
+	def get_teammates(self):
+		return self.current_team.athletes.all()
+
 	def save(self, *args, **kwargs):
 		athlete_group = Group.objects.get(name='athletes')
 		self.athlete.groups.add(athlete_group)

@@ -52,6 +52,9 @@ def feed(request):
 			clips = clips[1:]
 	return render(request, 'athletes/feed.html', {"feed_objects": feed_objects, "athlete": athlete })
 
+
+# Watching Logic
+
 @csrf_exempt
 @login_required
 def watch_player(request, athlete_id=None):

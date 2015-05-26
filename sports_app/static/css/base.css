@@ -137,6 +137,7 @@ section.team-heading div.team-options {
     width: 60%;
     margin-left: 20px;
     display: inline-block;
+    margin-top: 18px;
 }
 
 
@@ -387,10 +388,7 @@ div.top10-categories {
     width: 600px;
     margin-left: 30px;
     display: inline-block;
-}
-
-section.top10 div.header-container {
-    margin-top: 20px;
+    margin-top: 18px;
 }
 
 section.top10 ul li {

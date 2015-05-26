@@ -135,6 +135,18 @@ def star(request):
 		return render(request, 'athletes/star_btns.html', {'has_starred': True})
 	return HttpResponseForbidden()
 
+@group_required('athletes')
+@csrf_exempt
+def share(request):
+	if request.is_ajax() and request.method == 'POST':
+		athlete = request.user.athleteprofile
+		clip_id = int(request.POST['clip_id'])
+		shared_clip = Clip.objects.get(pk=clip_id)
+		ShareClip.objects.create(sharing_athlete=athlete, 
+								 clip=shared_clip)
+		return render(request, 'athletes/share_btns.html', {'has_shared': True})
+	return HttpResponseForbidden()
+
 
 @group_required('athletes')
 def top10(request):

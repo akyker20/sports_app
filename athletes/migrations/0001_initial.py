@@ -76,19 +76,29 @@ class Migration(migrations.Migration):
             bases=(models.Model,),
         ),
         migrations.CreateModel(
-            name='Game',
+            name='FeedContent',
             fields=[
                 ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
+                ('created_at', models.DateTimeField(auto_now_add=True)),
+            ],
+            options={
+                'abstract': False,
+            },
+            bases=(models.Model,),
+        ),
+        migrations.CreateModel(
+            name='Game',
+            fields=[
+                ('feedcontent_ptr', models.OneToOneField(parent_link=True, auto_created=True, primary_key=True, serialize=False, to='athletes.FeedContent')),
                 ('home_team_score', models.IntegerField(default=0)),
                 ('away_team_score', models.IntegerField(default=0)),
-                ('date', models.DateField()),
                 ('away_team', models.ForeignKey(related_name='away_games', to='teams.Team')),
                 ('home_team', models.ForeignKey(related_name='home_games', to='teams.Team')),
             ],
             options={
-                'ordering': ['date'],
+                'ordering': ['created_at'],
             },
-            bases=(models.Model,),
+            bases=('athletes.feedcontent',),
         ),
         migrations.CreateModel(
             name='GameComment',
@@ -135,20 +145,19 @@ class Migration(migrations.Migration):
         migrations.CreateModel(
             name='GameStat',
             fields=[
-                ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
+                ('feedcontent_ptr', models.OneToOneField(parent_link=True, auto_created=True, primary_key=True, serialize=False, to='athletes.FeedContent')),
                 ('points', models.IntegerField(default=0)),
                 ('rebounds', models.IntegerField(default=0)),
                 ('assists', models.IntegerField(default=0)),
                 ('blocks', models.IntegerField(default=0)),
                 ('steals', models.IntegerField(default=0)),
-                ('created_at', models.DateTimeField(auto_now_add=True)),
                 ('athlete', models.ForeignKey(to='athletes.AthleteProfile')),
                 ('game', models.ForeignKey(to='athletes.Game')),
             ],
             options={
                 'ordering': ['game'],
             },
-            bases=(models.Model,),
+            bases=('athletes.feedcontent',),
         ),
         migrations.CreateModel(
             name='GameStatStar',
@@ -185,6 +194,17 @@ class Migration(migrations.Migration):
             bases=('athletes.notification',),
         ),
         migrations.CreateModel(
+            name='SharedClip',
+            fields=[
+                ('feedcontent_ptr', models.OneToOneField(parent_link=True, auto_created=True, primary_key=True, serialize=False, to='athletes.FeedContent')),
+                ('athlete', models.ForeignKey(related_name='shared_clips', to='athletes.AthleteProfile')),
+            ],
+            options={
+                'abstract': False,
+            },
+            bases=('athletes.feedcontent',),
+        ),
+        migrations.CreateModel(
             name='UploadedClip',
             fields=[
                 ('clip_ptr', models.OneToOneField(parent_link=True, auto_created=True, primary_key=True, serialize=False, to='athletes.Clip')),
@@ -196,6 +216,12 @@ class Migration(migrations.Migration):
                 'abstract': False,
             },
             bases=('athletes.clip',),
+        ),
+        migrations.AddField(
+            model_name='sharedclip',
+            name='clip',
+            field=models.ForeignKey(related_name='shares', to='athletes.Clip'),
+            preserve_default=True,
         ),
         migrations.AddField(
             model_name='notification',
@@ -221,6 +247,12 @@ class Migration(migrations.Migration):
             model_name='gamefilmclip',
             name='gamestat',
             field=models.ForeignKey(related_name='clips', to='athletes.GameStat'),
+            preserve_default=True,
+        ),
+        migrations.AddField(
+            model_name='feedcontent',
+            name='polymorphic_ctype',
+            field=models.ForeignKey(related_name='polymorphic_athletes.feedcontent_set', editable=False, to='contenttypes.ContentType', null=True),
             preserve_default=True,
         ),
         migrations.AddField(

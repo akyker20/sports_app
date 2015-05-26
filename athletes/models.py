@@ -55,50 +55,46 @@ class AthleteProfile(models.Model):
 			self.watching.add(athlete)
 			athlete.watching.add(self)
 
+class FeedContent(PolymorphicModel):
+	created_at = models.DateTimeField(auto_now_add=True)
+	athletes_to_receive = models.ManyToManyField(AthleteProfile, blank=True, null=True, related_name='feed_content', through='AthleteContent')
 
-class Game(models.Model):
+class AthleteContent(models.Model):
+	feed_content = models.ForeignKey(FeedContent)
+	athlete = models.ForeignKey(AthleteProfile)
+
+class Game(FeedContent):
 	home_team = models.ForeignKey(Team, related_name="home_games")
 	away_team = models.ForeignKey(Team, related_name="away_games")
 	home_team_score = models.IntegerField(default=0)
 	away_team_score = models.IntegerField(default=0)
-	date = models.DateField()
 
 	def __unicode__(self):
-		return "{} vs. {} on {}".format(self.home_team, self.away_team, self.date)
+		return "{} vs. {} on {}".format(self.home_team, self.away_team, self.created_at)
+
+	def get_participating_athletes(self):
+		home_athletes = list(self.home_team.athletes.all())
+		away_athletes = list(self.away_team.athletes.all())
+		return home_athletes + away_athletes
 
 	class Meta:
-		ordering = ['date']
-
-
-class GameFilm(models.Model):
-	game = models.OneToOneField(Game, related_name='gamefilm')
-	coach_uploaded_by = models.ForeignKey(CoachProfile)
-	created_at = models.DateTimeField(auto_now_add=True)
-	duration = models.IntegerField(default=0)
-	file_size = models.IntegerField(default=0)
-	mpd_url = models.CharField(max_length=128)
-
-	def __unicode__(self):
-		return "Game film of {}".format(self.game)
+		ordering = ['created_at']
 
 	def save(self, *args, **kwargs):
-		super(GameFilm, self).save(*args, **kwargs)
-		if self.game.home_team:
-			for athlete in self.game.home_team.athletes.all():
-				GameFilmPostedNotification.objects.create(game_film=self, athlete=athlete)
-		if self.game.away_team:
-			for athlete in self.game.away_team.athletes.all():
-				GameFilmPostedNotification.objects.create(game_film=self, athlete=athlete)
+		super(Game, self).save(*args, **kwargs)
+
+		for athlete in self.get_participating_athletes():
+			AthleteContent.objects.create(athlete=athlete, 
+										  feed_content=self)
 
 
-class GameStat(models.Model):
+class GameStat(FeedContent):
 	points = models.IntegerField(default=0)
 	rebounds = models.IntegerField(default=0)
 	assists = models.IntegerField(default=0)
 	blocks = models.IntegerField(default=0)
 	steals = models.IntegerField(default=0)
 	athlete = models.ForeignKey(AthleteProfile)
-	created_at = models.DateTimeField(auto_now_add=True)
 	game = models.ForeignKey(Game)
 
 	def __unicode__(self):
@@ -108,11 +104,15 @@ class GameStat(models.Model):
 		return self.points + self.rebounds + self.assists + self.blocks + self.steals
 
 	def save(self, *args, **kwargs):
-		if self.athlete.current_team != self.game.home_team and self.athlete.current_team != self.game.away_team:
+		athletes_team = self.athlete.current_team
+		if athletes_team != self.game.home_team and watching_athlete != self.game.away_team:
 			raise ValidationError('Player must be from a team that played in the game!')
 		else:
 			super(GameStat, self).save(*args, **kwargs)
 			self.athlete.recomputeAverages()
+			for watching_athlete in self.athlete.watching.all():
+				AthleteContent.objects.create(athlete=watching_athlete, 
+											  feed_content=self)
 
 	class Meta:
 		unique_together = ('athlete', 'game',)
@@ -143,6 +143,40 @@ class GameFilmClip(Clip):
 
 	def get_gamefilm(self):
 		return self.gamestat.game.gamefilm
+
+class SharedClip(FeedContent):
+	sharing_athlete = models.ForeignKey(AthleteProfile, related_name='shared_clips')
+	clip = models.ForeignKey(Clip, related_name='shares')
+
+	def __unicode__(self):
+		return "Shared content by {} at {}".format(self.athlete, self.created_at)
+
+	def save(self, *args, **kwargs):
+		super(SharedClip, self).save(*args, **kwargs)
+		for watching_athlete in self.athlete.watching.all():
+			AthleteContent.objects.create(athlete=watching_athlete, 
+										  feed_content=self)
+
+
+class GameFilm(models.Model):
+	game = models.OneToOneField(Game, related_name='gamefilm')
+	coach_uploaded_by = models.ForeignKey(CoachProfile)
+	created_at = models.DateTimeField(auto_now_add=True)
+	duration = models.IntegerField(default=0)
+	file_size = models.IntegerField(default=0)
+	mpd_url = models.CharField(max_length=128)
+
+	def __unicode__(self):
+		return "Game film of {}".format(self.game)
+
+	def save(self, *args, **kwargs):
+		super(GameFilm, self).save(*args, **kwargs)
+		if self.game.home_team:
+			for athlete in self.game.home_team.athletes.all():
+				GameFilmPostedNotification.objects.create(game_film=self, athlete=athlete)
+		if self.game.away_team:
+			for athlete in self.game.away_team.athletes.all():
+				GameFilmPostedNotification.objects.create(game_film=self, athlete=athlete)
 
 
 class Comment(models.Model):

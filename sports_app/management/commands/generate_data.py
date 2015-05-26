@@ -50,8 +50,7 @@ class Command(BaseCommand):
 					game = Game.objects.create(home_team=team, 
 											   home_team_score=home_team_score, 
 											   away_team=team2, 
-											   away_team_score=away_team_score, 
-											   date=date.today())
+											   away_team_score=away_team_score)
 					GameFilm.objects.create(game=game,
 											coach_uploaded_by=team.coach, 
 											duration=37, 

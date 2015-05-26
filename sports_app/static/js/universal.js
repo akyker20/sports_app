@@ -29,6 +29,7 @@ $(document).ready(function(){
 	$('div.cc-right-container textarea').keydown(comment);
 
 	$('section.video-modal').on("click", 'div.video-modal button.star', star);
+  $('section.video-modal').on("click", 'div.video-modal button.share', share)
 	$('section.video-modal').on("click", "div.replay-clip", replayClip);
   $('section.video-modal').on("keydown", 'div.cc-right-container textarea', comment);
   $("section.video-modal").on("click", "div.video-modal span.modal-close", removeVideoModal);
@@ -206,6 +207,21 @@ $(document).ready(function(){
 			parent.append(html);
 		});
 	}
+
+  function share(e) {
+    e.stopPropagation();
+    var shareBtn = $(this);
+    var parent = shareBtn.parent();
+    var id = parent.data('id');
+    $.ajax({
+      url: "/athletes/share/",
+      type: "POST",
+      data: { "clip_id": id },
+    }).success(function(html){
+      shareBtn.remove();
+      parent.prepend(html);
+    });
+  }
 
 	function comment(e){
 		var input = $(this);

@@ -4,7 +4,7 @@
 
 {% load athlete_actions %}
     
-    <button class="right btn btn-success">Share</button>
+    {% athlete_shared model_instance=clip user=user %}
 
     {% athlete_starred model_instance=clip user=user %}
 

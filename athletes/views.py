@@ -34,23 +34,9 @@ def register(request):
 @login_required
 def feed(request):
 	athlete = request.user.athleteprofile
-	gamestats = GameStat.objects.filter(athlete__in=athlete.watching.all())[:5]
-	clips = Clip.objects.filter(athlete__in=athlete.watching.all())[:5]
-	feed_objects = []
-	while gamestats or clips:
-		if not gamestats:
-			feed_objects += clips
-			break
-		if not clips:
-			feed_objects += gamestats
-			break
-		if gamestats[0].created_at > clips[0].created_at:
-			feed_objects.append(gamestats[0])
-			gamestats = gamestats[1:]
-		else:
-			feed_objects.append(clips[0])
-			clips = clips[1:]
-	return render(request, 'athletes/feed.html', {"feed_objects": feed_objects, "athlete": athlete })
+	feed_objects = athlete.feed_content.all()
+	context = {"feed_objects": feed_objects, "athlete": athlete }
+	return render(request, 'athletes/feed.html', context)
 
 
 # Watching Logic
@@ -142,7 +128,7 @@ def share(request):
 		athlete = request.user.athleteprofile
 		clip_id = int(request.POST['clip_id'])
 		shared_clip = Clip.objects.get(pk=clip_id)
-		ShareClip.objects.create(sharing_athlete=athlete, 
+		SharedClip.objects.create(sharing_athlete=athlete, 
 								 clip=shared_clip)
 		return render(request, 'athletes/share_btns.html', {'has_shared': True})
 	return HttpResponseForbidden()

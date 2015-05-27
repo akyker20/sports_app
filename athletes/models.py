@@ -105,7 +105,7 @@ class GameStat(FeedContent):
 
 	def save(self, *args, **kwargs):
 		athletes_team = self.athlete.current_team
-		if athletes_team != self.game.home_team and watching_athlete != self.game.away_team:
+		if athletes_team != self.game.home_team and athletes_team != self.game.away_team:
 			raise ValidationError('Player must be from a team that played in the game!')
 		else:
 			super(GameStat, self).save(*args, **kwargs)
@@ -144,18 +144,30 @@ class GameFilmClip(Clip):
 	def get_gamefilm(self):
 		return self.gamestat.game.gamefilm
 
-class SharedClip(FeedContent):
+class SharedContent(FeedContent):
 	sharing_athlete = models.ForeignKey(AthleteProfile, related_name='shared_clips')
-	clip = models.ForeignKey(Clip, related_name='shares')
-
-	def __unicode__(self):
-		return "Shared content by {} at {}".format(self.athlete, self.created_at)
 
 	def save(self, *args, **kwargs):
-		super(SharedClip, self).save(*args, **kwargs)
-		for watching_athlete in self.athlete.watching.all():
-			AthleteContent.objects.create(athlete=watching_athlete, 
-										  feed_content=self)
+		creating = self.pk is None
+		super(SharedContent, self).save(*args, **kwargs)
+		if creating:
+			for watching_athlete in self.sharing_athlete.watching.all():
+				AthleteContent.objects.create(athlete=watching_athlete, 
+										  	  feed_content=self)
+
+	def __unicode__(self):
+		return "Shared content by {} at {}".format(self.sharing_athlete, self.created_at)
+
+
+class SharedClip(SharedContent):
+	clip = models.ForeignKey(Clip, related_name='shares')
+
+class SharedGameStat(SharedContent):
+	gamestat = models.ForeignKey(GameStat, related_name='shares')
+
+class SharedGame(SharedContent):
+	game = models.ForeignKey(Game, related_name='shares')
+		
 
 
 class GameFilm(models.Model):

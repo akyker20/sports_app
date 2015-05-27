@@ -8,8 +8,14 @@
 		{% for object in feed_objects %}
 			{% if object|get_class == 'GameStat' %}
 				{% include 'athletes/gamestat/gamestat.html' with stat=object athlete=athlete %}
-			{% else %}
-
+			{% elif object|get_class == 'SharedGamestat' %}
+				{% include 'athletes/gamestat/gamestat.html' with stat=object.gamestat athlete=athlete %}
+			{% elif object|get_class == 'Game' %}
+				{% include 'athletes/game/gameblock.html' with game=object athlete=athlete %}
+			{% elif object|get_class == 'SharedGame' %}
+				{% include 'athletes/game/gameblock.html' with game=object.game athlete=athlete %}
+			{% elif object|get_class == 'SharedClip' %}
+				{% include 'athletes/game/gameblock.html' with clip=object.clip %}
 			{% endif %}
 		{% endfor %}
     </div>

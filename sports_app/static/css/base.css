@@ -646,8 +646,11 @@ div.feed-clip {
 
 /* Clip and Comments Styling */
 
+button.share-btn,
 button.star-btn {
     float: right;
+}
+button.star-btn {
     margin-right: 5px;
 }
 

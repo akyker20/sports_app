@@ -33,67 +33,7 @@
 
     <div class="games" style="display: none">
       {% for game in recent_games %}
-        <div class="game-block">
-          <div class="team-info">
-            <div class="home-team">
-              <div class="team-name">
-                <h4>{{game.home_team}}</h4>
-              </div>
-            </div>
-            <img src="{{STATIC_URL}}images/parktudor.jpg" width="100px">
-            <div class="score">
-              {% if game.home_team_score > game.away_team_score %}
-              <h1>{{game.home_team_score}}</h1>
-              <h3 class="glyphicon glyphicon-triangle-left"></h3>
-              <h5>Final</h5>
-              <h3 style="color: white" class="glyphicon glyphicon-triangle-right"></h3>
-              <h1 class="weak">{{game.away_team_score}}</h1>
-              {% else %}
-              <h1 class="weak">{{game.home_team_score}}</h1>
-              <h3 style="color: white" class="glyphicon glyphicon-triangle-left"></h3>
-              <h5>Final</h5>
-              <h3 class="glyphicon glyphicon-triangle-right"></h3>
-              <h1>{{game.away_team_score}}</h1>
-              {% endif %}
-            </div>
-            <img src="{{STATIC_URL}}images/parktudor.jpg" width="100px">
-            <div class="away-team">
-              <div class="team-name">
-                <h4>{{game.away_team}}</h4>
-              </div>
-            </div>
-          </div>
-
-          {% load game %}
-          <div class="leading-scorers">
-            {% get_games_best_player game game.home_team as home_stat %}
-            {% get_games_best_player game game.away_team as away_stat %}
-            <div class="leading-player-container">
-              <div class="leading-player">
-                <img src="{{STATIC_URL}}images/player.jpg" width="100px">
-                <h5>{{home_stat.athlete}}</h5>
-                  {% include 'athletes/gamestat/gamestat-progressbar.html' with reb=home_stat.rebounds blks=home_stat.blocks stls=home_stat.steals asts=home_stat.assists pts=home_stat.points %}
-              </div>
-            </div>
-            <div class="leading-player-container">
-              <div class="leading-player">
-                <img src="{{STATIC_URL}}images/player.jpg" width="100px">
-                <h5>{{away_stat.athlete}}</h5>
-                  {% include 'athletes/gamestat/gamestat-progressbar.html' with reb=away_stat.rebounds blks=away_stat.blocks stls=away_stat.steals asts=away_stat.assists pts=away_stat.points %}
-              </div>
-            </div>
-          </div>
-          <div class="options">
-            <a data-game-id="{{game.id}}" class="view-game">Game Highlights</a>
-            {% if athlete %}
-              <div style="color: lightgray; display: inline-block; margin: 0px 20px">|</div>
-              {% if athlete.current_team == game.home_team or athlete.current_team == game.away_team %}
-              <a data-gamefilm-id="{{game.gamefilm.id}}" class="view-gamefilm">Gamefilm</a>
-              {% endif %}
-            {% endif %}
-          </div>
-
-        </div>
+        {% include 'athletes/games/gameblock.html' with game=game athlete=athlete %}
       {% endfor %}
     </div>
   </div>

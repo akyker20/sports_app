@@ -16,6 +16,15 @@ class Migration(migrations.Migration):
 
     operations = [
         migrations.CreateModel(
+            name='AthleteContent',
+            fields=[
+                ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
+            ],
+            options={
+            },
+            bases=(models.Model,),
+        ),
+        migrations.CreateModel(
             name='AthleteProfile',
             fields=[
                 ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
@@ -194,15 +203,46 @@ class Migration(migrations.Migration):
             bases=('athletes.notification',),
         ),
         migrations.CreateModel(
-            name='SharedClip',
+            name='SharedContent',
             fields=[
                 ('feedcontent_ptr', models.OneToOneField(parent_link=True, auto_created=True, primary_key=True, serialize=False, to='athletes.FeedContent')),
-                ('athlete', models.ForeignKey(related_name='shared_clips', to='athletes.AthleteProfile')),
             ],
             options={
                 'abstract': False,
             },
             bases=('athletes.feedcontent',),
+        ),
+        migrations.CreateModel(
+            name='SharedClip',
+            fields=[
+                ('sharedcontent_ptr', models.OneToOneField(parent_link=True, auto_created=True, primary_key=True, serialize=False, to='athletes.SharedContent')),
+            ],
+            options={
+                'abstract': False,
+            },
+            bases=('athletes.sharedcontent',),
+        ),
+        migrations.CreateModel(
+            name='SharedGame',
+            fields=[
+                ('sharedcontent_ptr', models.OneToOneField(parent_link=True, auto_created=True, primary_key=True, serialize=False, to='athletes.SharedContent')),
+                ('game', models.ForeignKey(related_name='shares', to='athletes.Game')),
+            ],
+            options={
+                'abstract': False,
+            },
+            bases=('athletes.sharedcontent',),
+        ),
+        migrations.CreateModel(
+            name='SharedGameStat',
+            fields=[
+                ('sharedcontent_ptr', models.OneToOneField(parent_link=True, auto_created=True, primary_key=True, serialize=False, to='athletes.SharedContent')),
+                ('gamestat', models.ForeignKey(related_name='shares', to='athletes.GameStat')),
+            ],
+            options={
+                'abstract': False,
+            },
+            bases=('athletes.sharedcontent',),
         ),
         migrations.CreateModel(
             name='UploadedClip',
@@ -216,6 +256,12 @@ class Migration(migrations.Migration):
                 'abstract': False,
             },
             bases=('athletes.clip',),
+        ),
+        migrations.AddField(
+            model_name='sharedcontent',
+            name='sharing_athlete',
+            field=models.ForeignKey(related_name='shared_clips', to='athletes.AthleteProfile'),
+            preserve_default=True,
         ),
         migrations.AddField(
             model_name='sharedclip',
@@ -251,6 +297,12 @@ class Migration(migrations.Migration):
         ),
         migrations.AddField(
             model_name='feedcontent',
+            name='athletes_to_receive',
+            field=models.ManyToManyField(related_name='feed_content', null=True, through='athletes.AthleteContent', to='athletes.AthleteProfile', blank=True),
+            preserve_default=True,
+        ),
+        migrations.AddField(
+            model_name='feedcontent',
             name='polymorphic_ctype',
             field=models.ForeignKey(related_name='polymorphic_athletes.feedcontent_set', editable=False, to='contenttypes.ContentType', null=True),
             preserve_default=True,
@@ -281,6 +333,18 @@ class Migration(migrations.Migration):
             model_name='clip',
             name='polymorphic_ctype',
             field=models.ForeignKey(related_name='polymorphic_athletes.clip_set', editable=False, to='contenttypes.ContentType', null=True),
+            preserve_default=True,
+        ),
+        migrations.AddField(
+            model_name='athletecontent',
+            name='athlete',
+            field=models.ForeignKey(to='athletes.AthleteProfile'),
+            preserve_default=True,
+        ),
+        migrations.AddField(
+            model_name='athletecontent',
+            name='feed_content',
+            field=models.ForeignKey(to='athletes.FeedContent'),
             preserve_default=True,
         ),
     ]
